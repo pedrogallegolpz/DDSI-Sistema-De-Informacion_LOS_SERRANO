@@ -72,3 +72,4 @@ Revisar el archivo `losserrano.pdf`. Se da información acerca del proceso de se
 
 En nuestro caso hicimos una interfaz de usuario la cual no vamos a compartir en este repositorio más que la imagen. Se desarrolló a través de JDeveloper Studio siguiendo su tutorial inicial, por lo que la dificultad de esta interfaz es mínima, así que os invito a hacer la misma!
 
+![Image text](https://github.com/pedrogallegolpz/DDSI-Sistema-De-Informacion_Los_Serrano.git/interfaz.PNG)
