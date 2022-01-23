@@ -32,7 +32,7 @@ Desde aquí se manejan las entradas tanto a los partidos en el estadio como a lo
 
 ##### Subsistema Abonados
 
-Nos permite gestionar a nuestros abonados. Desde *dar de Alta/Baja, enviar noticias a nuestros abonados actuales y mucho más*. 
+Nos permite gestionar a nuestros abonados. Desde *dar de Alta/Baja, enviar noticias* a nuestros abonados actuales y mucho más. 
 
 > Es notable decir que este código envía correos desde una cuenta GMAIL cuyo correo y contraseña se encuentran en el código. El correo no es personal y se hizo con la única finalidad de este proyecto. Por otra parte, cuidado con los correos que añadís en los Abonados porque se enviarán correos a todos ellos.
 
