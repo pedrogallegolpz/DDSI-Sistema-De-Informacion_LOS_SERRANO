@@ -25,44 +25,44 @@ public class main{
 			System.out.println("\nBienvenido a nuestra Base de Datos, introduzca un número de 1 al 4:");
 			while(!terminar){
 				System.out.println("1-Equipo.");
-    		System.out.println("2-Eventos");
-    		System.out.println("3-Zona de abonado");
-    		System.out.println("4-Tienda");
-    		System.out.println("5-Salir.");
-    		System.out.println("6-MANTENIMIENTO.");
+				System.out.println("2-Eventos");
+				System.out.println("3-Zona de abonado");
+				System.out.println("4-Tienda");
+				System.out.println("5-Salir.");
+				System.out.println("6-MANTENIMIENTO.");
 
 				opcion = input.nextInt();
 
 				switch(opcion){
-          case 1:
-              tomate.menuEquipo();
-          break;
+					case 1:
+						tomate.menuEquipo();
+						break;
 
-          case 2:
-              tomate.menuEventos();
-          break;
+					case 2:
+						tomate.menuEventos();
+						break;
 
-          case 3:
-              tomate.menuAbonados();
-          break;
+					case 3:
+						tomate.menuAbonados();
+						break;
 
-        	case 4:
-              tomate.menuTienda();
-          break;
+					case 4:
+						tomate.menuTienda();
+						break;
 
-        	case 5:
-              terminar = true;
-							tomate.salir();
-          break;
+					case 5:
+						terminar = true;
+						tomate.salir();
+						break;
 
-        	case 6:
-              tomate.menuMantenimiento();
-          break;
+					case 6:
+						tomate.menuMantenimiento();
+						break;
 
-          default:
-              System.out.println("Esta opción no es válida. Por favor, introduzca un número del 1 al 4:");
-          break;
-    		}
+					default:
+						System.out.println("Esta opción no es válida. Por favor, introduzca un número del 1 al 4:");
+						break;
+				}
 
 			}
 		}catch(SQLException e){

@@ -77,240 +77,232 @@ public class Serrano {
 		}
 	};
 
-public void crearTablas() throws SQLException {
-  try{
-    Statement stmt = connection.createStatement();
-
-    // Se crea Tabla PRODUCTO
+	public void crearTablas() throws SQLException {
 		try{
-    	stmt.executeUpdate("CREATE TABLE Producto(CProducto NUMBER CONSTRAINT CProducto_no_nulo NOT NULL CONSTRAINT CProducto_clave_primaria PRIMARY KEY)");
-		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			Statement stmt = connection.createStatement();
 
-    // Se crea Tabla PROVEEDOR
-		try{
-    	stmt.executeUpdate("CREATE TABLE Proveedor(CProveedor NUMBER CONSTRAINT Cproveedor_no_nulo NOT NULL CONSTRAINT Cproveedor_clave_primaria PRIMARY KEY,Contacto VARCHAR2(40))");
-		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			// Se crea Tabla PRODUCTO
+			try{
+				stmt.executeUpdate("CREATE TABLE Producto(CProducto NUMBER CONSTRAINT CProducto_no_nulo NOT NULL CONSTRAINT CProducto_clave_primaria PRIMARY KEY)");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
 
-    // Se crea Tabla CLIENTE
-		try{
-    	stmt.executeUpdate("CREATE TABLE Cliente(	CDNI VARCHAR2(9) CONSTRAINT Cdni_no_nulo NOT NULL CONSTRAINT Cdni_clave_primaria PRIMARY KEY) ");
-		}catch(SQLException e){
-	  	System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-	  }
+			// Se crea Tabla PROVEEDOR
+			try{
+				stmt.executeUpdate("CREATE TABLE Proveedor(CProveedor NUMBER CONSTRAINT Cproveedor_no_nulo NOT NULL CONSTRAINT Cproveedor_clave_primaria PRIMARY KEY,Contacto VARCHAR2(40))");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
 
-    // Se crea Tabla EMPRESAEXTERNA
-		try{
-    	stmt.executeUpdate("CREATE TABLE EmpresaExterna(CNombre VARCHAR2(40) CONSTRAINT Cnombre_no_nulo NOT NULL CONSTRAINT Cnombre_clave_primaria PRIMARY KEY,  Correo VARCHAR2(40) CONSTRAINT correo_empresa_no_nulo NOT NULL)");
-		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			// Se crea Tabla CLIENTE
+			try{
+				stmt.executeUpdate("CREATE TABLE Cliente(	CDNI VARCHAR2(9) CONSTRAINT Cdni_no_nulo NOT NULL CONSTRAINT Cdni_clave_primaria PRIMARY KEY) ");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
 
-    // Se crea Tabla EMPLEADO
-		try{
-    	stmt.executeUpdate("CREATE TABLE Empleado( CDNI_empleado VARCHAR2(9) CONSTRAINT Cdniempleado_clave_primaria PRIMARY KEY )");
-		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			// Se crea Tabla EMPRESAEXTERNA
+			try{
+				stmt.executeUpdate("CREATE TABLE EmpresaExterna(CNombre VARCHAR2(40) CONSTRAINT Cnombre_no_nulo NOT NULL CONSTRAINT Cnombre_clave_primaria PRIMARY KEY,  Correo VARCHAR2(40) CONSTRAINT correo_empresa_no_nulo NOT NULL)");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
 
-    // Se crea Tabla COMPONENTE
-		try{
-    	stmt.executeUpdate("CREATE TABLE Componente(CDNI VARCHAR2(9) CONSTRAINT Cdni_componente_no_nulo NOT NULL CONSTRAINT Cdni_componente_clave_primaria PRIMARY KEY, Nombre VARCHAR2(40) CONSTRAINT nombre_no_nulo NOT NULL, Direccion VARCHAR2(40) CONSTRAINT direccion_no_nulo NOT NULL, Salario NUMBER CONSTRAINT salario_no_nulo NOT NULL,	Correo VARCHAR2(40) CONSTRAINT correo_no_nulo NOT NULL, Telefono VARCHAR2(9) CONSTRAINT telefono_no_nulo NOT NULL, Clausula_rescision NUMBER CONSTRAINT clausula_no_nulo NOT NULL, FechaInicio DATE, FechaFin DATE)");
-		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			// Se crea Tabla EMPLEADO
+			try{
+				stmt.executeUpdate("CREATE TABLE Empleado( CDNI_empleado VARCHAR2(9) CONSTRAINT Cdniempleado_clave_primaria PRIMARY KEY )");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
 
-    // Se crea Tabla PRODUCTOACTIVO
-		try{
-    	stmt.executeUpdate("CREATE TABLE ProductoActivo(CProducto NUMBER CONSTRAINT Cproducto_clave_externa REFERENCES Producto(CProducto) CONSTRAINT Cproducto_act_clave_primaria PRIMARY KEY, Cantidad NUMBER CONSTRAINT cantidad_prodact_no_nulo NOT NULL, Precio NUMBER CONSTRAINT precio_prodac_no_nulo NOT NULL)");
-		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			// Se crea Tabla COMPONENTE
+			try{
+				stmt.executeUpdate("CREATE TABLE Componente(CDNI VARCHAR2(9) CONSTRAINT Cdni_componente_no_nulo NOT NULL CONSTRAINT Cdni_componente_clave_primaria PRIMARY KEY, Nombre VARCHAR2(40) CONSTRAINT nombre_no_nulo NOT NULL, Direccion VARCHAR2(40) CONSTRAINT direccion_no_nulo NOT NULL, Salario NUMBER CONSTRAINT salario_no_nulo NOT NULL,	Correo VARCHAR2(40) CONSTRAINT correo_no_nulo NOT NULL, Telefono VARCHAR2(9) CONSTRAINT telefono_no_nulo NOT NULL, Clausula_rescision NUMBER CONSTRAINT clausula_no_nulo NOT NULL, FechaInicio DATE, FechaFin DATE)");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
 
-    // Se crea Tabla COMPRATIENDA
-		try{
-    	stmt.executeUpdate("CREATE TABLE CompraTienda( CDNI VARCHAR2(9) CONSTRAINT Cdni_clave_externa REFERENCES Cliente(CDNI), CProducto NUMBER CONSTRAINT Cproducto_CT_clave_externa REFERENCES Producto(CProducto), Cantidad NUMBER, CONSTRAINT clave_primaria_compraTienda PRIMARY KEY (CDNI,CProducto))");
-		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			// Se crea Tabla PRODUCTOACTIVO
+			try{
+				stmt.executeUpdate("CREATE TABLE ProductoActivo(CProducto NUMBER CONSTRAINT Cproducto_clave_externa REFERENCES Producto(CProducto) CONSTRAINT Cproducto_act_clave_primaria PRIMARY KEY, Cantidad NUMBER CONSTRAINT cantidad_prodact_no_nulo NOT NULL, Precio NUMBER CONSTRAINT precio_prodac_no_nulo NOT NULL)");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
 
-    // Se crea Tabla PEDIDOENVIO
-		try{
-    	stmt.executeUpdate("CREATE TABLE Pedido_Envio( CPedido NUMBER CONSTRAINT Cpedido_no_nulo NOT NULL CONSTRAINT Cpedido_clave_primaria PRIMARY KEY, CProveedor NUMBER CONSTRAINT Cproveedor_clave_externa REFERENCES Proveedor(CProveedor))");
-		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			// Se crea Tabla COMPRATIENDA
+			try{
+				stmt.executeUpdate("CREATE TABLE CompraTienda( CDNI VARCHAR2(9) CONSTRAINT Cdni_clave_externa REFERENCES Cliente(CDNI), CProducto NUMBER CONSTRAINT Cproducto_CT_clave_externa REFERENCES Producto(CProducto), Cantidad NUMBER, CONSTRAINT clave_primaria_compraTienda PRIMARY KEY (CDNI,CProducto))");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
 
-    // Se crea Tabla CONTIENE
-		try{
-    	stmt.executeUpdate("CREATE TABLE Contiene( CProducto NUMBER CONSTRAINT Cproducto_con_clave_externa REFERENCES ProductoActivo(CProducto), CPedido NUMBER CONSTRAINT Cpedido_clave_externa REFERENCES Pedido_Envio(CPedido), Cantidad NUMBER, CONSTRAINT clave_primaria_contiene PRIMARY KEY (CProducto,CPedido))");
-		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			// Se crea Tabla PEDIDOENVIO
+			try{
+				stmt.executeUpdate("CREATE TABLE Pedido_Envio( CPedido NUMBER CONSTRAINT Cpedido_no_nulo NOT NULL CONSTRAINT Cpedido_clave_primaria PRIMARY KEY, CProveedor NUMBER CONSTRAINT Cproveedor_clave_externa REFERENCES Proveedor(CProveedor))");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
 
-
-    // Se crea Tabla EVENTO
-		try{
-    	stmt.executeUpdate("CREATE TABLE Evento(CEvento NUMBER CONSTRAINT Cevento_no_nulo NOT NULL CONSTRAINT Cevento_clave_primaria PRIMARY KEY, fecha DATE)");
-		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			// Se crea Tabla CONTIENE
+			try{
+				stmt.executeUpdate("CREATE TABLE Contiene( CProducto NUMBER CONSTRAINT Cproducto_con_clave_externa REFERENCES ProductoActivo(CProducto), CPedido NUMBER CONSTRAINT Cpedido_clave_externa REFERENCES Pedido_Envio(CPedido), Cantidad NUMBER, CONSTRAINT clave_primaria_contiene PRIMARY KEY (CProducto,CPedido))");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
 
 
-    // Se crea Tabla COMPRAENTRADAACCESO
-		try{
-    	stmt.executeUpdate("CREATE TABLE Compra_Entrada_Acceso(CDNI VARCHAR2(9) CONSTRAINT Cdni_ent_acc_clave_extern REFERENCES Cliente(CDNI),CEvento NUMBER CONSTRAINT Cevento_no_nul NOT NULL CONSTRAINT Cevento_ent_acc_clave_e REFERENCES Evento(CEvento),num_asiento NUMBER CONSTRAINT num_asiento_no_nul NOT NULL, CONSTRAINT asiento_cevent_clave_primar PRIMARY KEY (num_asiento, CEvento))");
-		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
-
-    // Se crea Tabla INCIDENCIASINFORME
-		try{
-    	stmt.executeUpdate("CREATE TABLE Incidencias_Informe( CEvento NUMBER CONSTRAINT Cevento_clave_externa REFERENCES Evento(CEvento), CIncidencia VARCHAR2(100) CONSTRAINT Cincidencia_no_nulo NOT NULL, CONSTRAINT Cincidencia_clave_primaria PRIMARY KEY (CEvento, CIncidencia))");
-		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
-
-    // Se crea Tabla CONTRATADA
-		try{
-    	stmt.executeUpdate("CREATE TABLE Contratada( CEvento NUMBER CONSTRAINT Cevento_contr_clave_externa REFERENCES Evento(CEvento), CNombre VARCHAR2(40) CONSTRAINT Cnombre_clave_externa REFERENCES EmpresaExterna(CNombre), CONSTRAINT clave_primaria_contratada PRIMARY KEY (CEvento,CNombre))");
-		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
-
-    // Se crea Tabla ORGANIZA
-		try{
-    	stmt.executeUpdate("CREATE TABLE Organiza( CEvento CONSTRAINT Cevento_clave_externa_Evento REFERENCES Evento(CEvento), CDNI_empleado CONSTRAINT Cdniempleado_Emp_clave_externa REFERENCES Empleado(CDNI_empleado), CONSTRAINT clave_primaria_Organiza PRIMARY KEY (CEvento,CDNI_empleado))");
-		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
-
-    // Se crea Tabla ABONADO
-		try{
-    	stmt.executeUpdate("CREATE TABLE Abonado( CDNI VARCHAR2(9) CONSTRAINT Cdni_ab_no_nulo NOT NULL CONSTRAINT Cdni_ab_clave_primaria PRIMARY KEY REFERENCES Cliente(CDNI), Nombre VARCHAR2(40) CONSTRAINT nombre_ab_no_nulo NOT NULL, Apellidos VARCHAR2(40) CONSTRAINT direccion_ab_no_nulo NOT NULL, Correo VARCHAR2(40) CONSTRAINT correo_ab_no_nulo NOT NULL, Telefono VARCHAR2(9) CONSTRAINT telefono_ab_no_nulo NOT NULL, Anyo_Alta NUMBER CONSTRAINT num_abonado_no_nulo	NOT NULL)");
-		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
-
-    // Se crea Tabla COMPONENTEACTIVOCONTRATO
-		try{
-    	stmt.executeUpdate("CREATE TABLE ComponenteActivo_Contrato( CDNI VARCHAR2(9) CONSTRAINT Cdniempl_act_clave_primaria PRIMARY KEY CONSTRAINT Cdni_comp_clave_externa REFERENCES Componente(CDNI), CDNI_empleado VARCHAR2(9) CONSTRAINT Cdniempleado_no_nulo NOT NULL REFERENCES Empleado(CDNI_empleado)) ");
-		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
-
-    // Se crea Tabla ABONADOACTIVOCONTRATAABONO
-		try{
-    	stmt.executeUpdate("CREATE TABLE AbonadoActivo_Contrata_Abono( CDNI VARCHAR2(9) CONSTRAINT Cdni_ab_act_no_nulo NOT NULL CONSTRAINT Cdni_ab_act_clave_primaria PRIMARY KEY REFERENCES Abonado(CDNI), num_asiento NUMBER CONSTRAINT num_asiento_ab_no_nulo NOT NULL UNIQUE, numero_abonado NUMBER CONSTRAINT num_abonado_ab_no_nulo NOT NULL 	)");
-		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
-
-    // Se crea Tabla EXTRADEPORTIVO
-		try{
-    	stmt.executeUpdate("CREATE TABLE Extradeportivo(CEvento NUMBER CONSTRAINT Cevento_ext_clave_primaria PRIMARY KEY CONSTRAINT Cevento_ext_clave_externa REFERENCES Evento(CEvento))");
-		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
-
-    // Se crea Tabla PARTIDO
-		try{
-    	stmt.executeUpdate("CREATE TABLE Partido(CEvento NUMBER CONSTRAINT Cevento_pa_clave_primaria PRIMARY KEY CONSTRAINT Cevento_pa_clave_externa REFERENCES Evento(CEvento))");
-		}catch(SQLException e){
-			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
-
-    // Se crea Tabla ACCESOABONADO
-		try{
-    	stmt.executeUpdate("CREATE TABLE AccesoAbonado( CEvento CONSTRAINT Cevento_acc_clave_externa REFERENCES Partido(CEvento), num_asiento NUMBER CONSTRAINT num_asiento_acc_no_nulo NOT NULL REFERENCES AbonadoActivo_Contrata_Abono(num_asiento), CONSTRAINT clave_primaria_AccesoAbonado PRIMARY KEY (CEvento,num_asiento))");
-		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
-
-		try{
-			stmt.executeUpdate("create sequence sec_abonado start with 1 increment by 1 maxvalue 999999 minvalue 1");
-		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
-
-		try{
-			stmt.executeUpdate("create sequence sec_codigoenvio start with 1 increment by 1 maxvalue 999999 minvalue 1");
-		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			// Se crea Tabla EVENTO
+			try{
+				stmt.executeUpdate("CREATE TABLE Evento(CEvento NUMBER CONSTRAINT Cevento_no_nulo NOT NULL CONSTRAINT Cevento_clave_primaria PRIMARY KEY, fecha DATE)");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
 
 
-		try{
+			// Se crea Tabla COMPRAENTRADAACCESO
+			try{
+				stmt.executeUpdate("CREATE TABLE Compra_Entrada_Acceso(CDNI VARCHAR2(9) CONSTRAINT Cdni_ent_acc_clave_extern REFERENCES Cliente(CDNI),CEvento NUMBER CONSTRAINT Cevento_no_nul NOT NULL CONSTRAINT Cevento_ent_acc_clave_e REFERENCES Evento(CEvento),num_asiento NUMBER CONSTRAINT num_asiento_no_nul NOT NULL, CONSTRAINT asiento_cevent_clave_primar PRIMARY KEY (num_asiento, CEvento))");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
+
+			// Se crea Tabla INCIDENCIASINFORME
+			try{
+				stmt.executeUpdate("CREATE TABLE Incidencias_Informe( CEvento NUMBER CONSTRAINT Cevento_clave_externa REFERENCES Evento(CEvento), CIncidencia VARCHAR2(100) CONSTRAINT Cincidencia_no_nulo NOT NULL, CONSTRAINT Cincidencia_clave_primaria PRIMARY KEY (CEvento, CIncidencia))");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
+
+			// Se crea Tabla CONTRATADA
+			try{
+				stmt.executeUpdate("CREATE TABLE Contratada( CEvento NUMBER CONSTRAINT Cevento_contr_clave_externa REFERENCES Evento(CEvento), CNombre VARCHAR2(40) CONSTRAINT Cnombre_clave_externa REFERENCES EmpresaExterna(CNombre), CONSTRAINT clave_primaria_contratada PRIMARY KEY (CEvento,CNombre))");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
+
+			// Se crea Tabla ORGANIZA
+			try{
+				stmt.executeUpdate("CREATE TABLE Organiza( CEvento CONSTRAINT Cevento_clave_externa_Evento REFERENCES Evento(CEvento), CDNI_empleado CONSTRAINT Cdniempleado_Emp_clave_externa REFERENCES Empleado(CDNI_empleado), CONSTRAINT clave_primaria_Organiza PRIMARY KEY (CEvento,CDNI_empleado))");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
+
+			// Se crea Tabla ABONADO
+			try{
+				stmt.executeUpdate("CREATE TABLE Abonado( CDNI VARCHAR2(9) CONSTRAINT Cdni_ab_no_nulo NOT NULL CONSTRAINT Cdni_ab_clave_primaria PRIMARY KEY REFERENCES Cliente(CDNI), Nombre VARCHAR2(40) CONSTRAINT nombre_ab_no_nulo NOT NULL, Apellidos VARCHAR2(40) CONSTRAINT direccion_ab_no_nulo NOT NULL, Correo VARCHAR2(40) CONSTRAINT correo_ab_no_nulo NOT NULL, Telefono VARCHAR2(9) CONSTRAINT telefono_ab_no_nulo NOT NULL, Anyo_Alta NUMBER CONSTRAINT num_abonado_no_nulo	NOT NULL)");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
+
+			// Se crea Tabla COMPONENTEACTIVOCONTRATO
+			try{
+				stmt.executeUpdate("CREATE TABLE ComponenteActivo_Contrato( CDNI VARCHAR2(9) CONSTRAINT Cdniempl_act_clave_primaria PRIMARY KEY CONSTRAINT Cdni_comp_clave_externa REFERENCES Componente(CDNI), CDNI_empleado VARCHAR2(9) CONSTRAINT Cdniempleado_no_nulo NOT NULL REFERENCES Empleado(CDNI_empleado)) ");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
+
+			// Se crea Tabla ABONADOACTIVOCONTRATAABONO
+			try{
+				stmt.executeUpdate("CREATE TABLE AbonadoActivo_Contrata_Abono( CDNI VARCHAR2(9) CONSTRAINT Cdni_ab_act_no_nulo NOT NULL CONSTRAINT Cdni_ab_act_clave_primaria PRIMARY KEY REFERENCES Abonado(CDNI), num_asiento NUMBER CONSTRAINT num_asiento_ab_no_nulo NOT NULL UNIQUE, numero_abonado NUMBER CONSTRAINT num_abonado_ab_no_nulo NOT NULL 	)");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
+
+			// Se crea Tabla EXTRADEPORTIVO
+			try{
+				stmt.executeUpdate("CREATE TABLE Extradeportivo(CEvento NUMBER CONSTRAINT Cevento_ext_clave_primaria PRIMARY KEY CONSTRAINT Cevento_ext_clave_externa REFERENCES Evento(CEvento))");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
+
+			// Se crea Tabla PARTIDO
+			try{
+				stmt.executeUpdate("CREATE TABLE Partido(CEvento NUMBER CONSTRAINT Cevento_pa_clave_primaria PRIMARY KEY CONSTRAINT Cevento_pa_clave_externa REFERENCES Evento(CEvento))");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
+
+			// Se crea Tabla ACCESOABONADO
+			try{
+				stmt.executeUpdate("CREATE TABLE AccesoAbonado( CEvento CONSTRAINT Cevento_acc_clave_externa REFERENCES Partido(CEvento), num_asiento NUMBER CONSTRAINT num_asiento_acc_no_nulo NOT NULL REFERENCES AbonadoActivo_Contrata_Abono(num_asiento), CONSTRAINT clave_primaria_AccesoAbonado PRIMARY KEY (CEvento,num_asiento))");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
+
+			try{
+				stmt.executeUpdate("create sequence sec_abonado start with 1 increment by 1 maxvalue 999999 minvalue 1");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
+
+			try{
+				stmt.executeUpdate("create sequence sec_codigoenvio start with 1 increment by 1 maxvalue 999999 minvalue 1");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
+
+
+			try{
 			stmt.executeUpdate("CREATE OR REPLACE TRIGGER actualizarcantidadVentaItems AFTER INSERT ON CompraTienda FOR EACH ROW BEGIN UPDATE ProductoActivo SET Cantidad=Cantidad-:new.Cantidad  WHERE CProducto=:new.CProducto; END;");
+			}catch(SQLException e){
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
+
+
+			try{
+				stmt.executeUpdate("CREATE OR REPLACE TRIGGER anadir_cliente_compratienda BEFORE INSERT ON CompraTienda FOR EACH ROW BEGIN INSERT INTO Cliente VALUES(:new.CDNI); EXCEPTION WHEN DUP_VAL_ON_INDEX THEN DBMS_OUTPUT.PUT_LINE('INSERCIÓN FALLIDA.1'); END;");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
+
+
+
+			try{
+				stmt.executeUpdate("CREATE OR REPLACE TRIGGER anadir_cliente_compraentrada BEFORE INSERT ON Compra_Entrada_Acceso FOR EACH ROW BEGIN INSERT INTO Cliente VALUES(:new.CDNI); EXCEPTION WHEN DUP_VAL_ON_INDEX THEN DBMS_OUTPUT.PUT_LINE('INSERCIÓN FALLIDA.2'); END;");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
+
+
+			try{
+				stmt.executeUpdate("CREATE OR REPLACE TRIGGER anadir_cliente_abonado BEFORE INSERT ON Abonado FOR EACH ROW BEGIN INSERT INTO Cliente VALUES(:new.CDNI); EXCEPTION WHEN DUP_VAL_ON_INDEX THEN DBMS_OUTPUT.PUT_LINE('INSERCIÓN FALLIDA.3'); END;");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
+
+ 
+			try{
+				stmt.executeUpdate("CREATE OR REPLACE TRIGGER insertar_abonado BEFORE INSERT ON AbonadoActivo_Contrata_Abono FOR EACH ROW DECLARE asiento_ocupado INTEGER; BEGIN SELECT COUNT(*) INTO asiento_ocupado FROM AbonadoActivo_Contrata_Abono WHERE num_asiento= :new.num_asiento; IF(asiento_ocupado!=0) THEN RAISE_APPLICATION_ERROR(-20001,'No se puede asignar dicho asiento al abonado.'); END IF; END;");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
+
+			try{
+				stmt.executeUpdate("CREATE OR REPLACE TRIGGER nuevo_pedido BEFORE INSERT ON Pedido_Envio FOR EACH ROW DECLARE encontrado INTEGER; BEGIN SELECT COUNT(*) INTO encontrado FROM Pedido_Envio WHERE CProveedor = :new.CProveedor; IF(encontrado!=0) THEN RAISE_APPLICATION_ERROR(-20002,'No se puede realizar otro pedido a dicho proveedor hasta que llegue el pedido actual.'); END IF; END;");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
+
+			try{
+				stmt.executeUpdate("CREATE OR REPLACE TRIGGER anadir_producto BEFORE INSERT ON ProductoActivo FOR EACH ROW BEGIN INSERT INTO Producto VALUES(:new.CProducto); EXCEPTION WHEN DUP_VAL_ON_INDEX THEN DBMS_OUTPUT.PUT_LINE('Ya era un producto (no activo)'); END;");
+			}catch(SQLException e){
+				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+			}
+
+
+			connection.commit();
+			System.out.println("Tablas y disparadores creados (66% reset...)");
+
 		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
-
-
-		try{
-			stmt.executeUpdate("CREATE OR REPLACE TRIGGER anadir_cliente_compratienda BEFORE INSERT ON CompraTienda FOR EACH ROW BEGIN INSERT INTO Cliente VALUES(:new.CDNI); EXCEPTION WHEN DUP_VAL_ON_INDEX THEN DBMS_OUTPUT.PUT_LINE('INSERCIÓN FALLIDA.1'); END;");
-		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
-
-
-
-		try{
-			stmt.executeUpdate("CREATE OR REPLACE TRIGGER anadir_cliente_compraentrada BEFORE INSERT ON Compra_Entrada_Acceso FOR EACH ROW BEGIN INSERT INTO Cliente VALUES(:new.CDNI); EXCEPTION WHEN DUP_VAL_ON_INDEX THEN DBMS_OUTPUT.PUT_LINE('INSERCIÓN FALLIDA.2'); END;");
-		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
-
-
-		try{
-			stmt.executeUpdate("CREATE OR REPLACE TRIGGER anadir_cliente_abonado BEFORE INSERT ON Abonado FOR EACH ROW BEGIN INSERT INTO Cliente VALUES(:new.CDNI); EXCEPTION WHEN DUP_VAL_ON_INDEX THEN DBMS_OUTPUT.PUT_LINE('INSERCIÓN FALLIDA.3'); END;");
-		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
-
-
-		/* try{
-			stmt.executeUpdate("CREATE OR REPLACE TRIGGER insertar_componente AFTER INSERT ON Componente FOR EACH ROW BEGIN INSERT INTO ComponenteActivo_Contrato VALUES(:new.CDNI,'76543123W'); EXCEPTION WHEN DUP_VAL_ON_INDEX THEN DBMS_OUTPUT.PUT_LINE('INSERCIÓN FALLIDA.4'); END;");
-		}catch(SQLException e){
-	System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-	} */
-
-		try{
-			stmt.executeUpdate("CREATE OR REPLACE TRIGGER insertar_abonado BEFORE INSERT ON AbonadoActivo_Contrata_Abono FOR EACH ROW DECLARE asiento_ocupado INTEGER; BEGIN SELECT COUNT(*) INTO asiento_ocupado FROM AbonadoActivo_Contrata_Abono WHERE num_asiento= :new.num_asiento; IF(asiento_ocupado!=0) THEN RAISE_APPLICATION_ERROR(-20001,'No se puede asignar dicho asiento al abonado.'); END IF; END;");
-		}catch(SQLException e){
-	System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-	}
-
-		try{
-			stmt.executeUpdate("CREATE OR REPLACE TRIGGER nuevo_pedido BEFORE INSERT ON Pedido_Envio FOR EACH ROW DECLARE encontrado INTEGER; BEGIN SELECT COUNT(*) INTO encontrado FROM Pedido_Envio WHERE CProveedor = :new.CProveedor; IF(encontrado!=0) THEN RAISE_APPLICATION_ERROR(-20002,'No se puede realizar otro pedido a dicho proveedor hasta que llegue el pedido actual.'); END IF; END;");
-		}catch(SQLException e){
-	System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-	}
-
-	try{
-		stmt.executeUpdate("CREATE OR REPLACE TRIGGER anadir_producto BEFORE INSERT ON ProductoActivo FOR EACH ROW BEGIN INSERT INTO Producto VALUES(:new.CProducto); EXCEPTION WHEN DUP_VAL_ON_INDEX THEN DBMS_OUTPUT.PUT_LINE('Ya era un producto (no activo)'); END;");
-	}catch(SQLException e){
-		System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-	}
-
-
-    connection.commit();
-    System.out.println("Tablas y disparadores creados (66% reset...)");
-
-  }catch(SQLException e){
-    System.err.format("SQL exception: %s\n%s\n", e.getSQLState(), e.getMessage());
-  }
-};
+			System.err.format("SQL exception: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
+	};
 
 
 public void inicializar(){
 	try{
 		Statement stmt = connection.createStatement();
-
-
 
 		// Tabla Producto
 		try{
@@ -331,25 +323,13 @@ public void inicializar(){
 			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
 
-		// Tabla Cliente
-		/*try{
-			stmt.executeUpdate("INSERT INTO Cliente VALUES('86543423W')");
-			stmt.executeUpdate("INSERT INTO Cliente VALUES('42343423L')");
-			stmt.executeUpdate("INSERT INTO Cliente VALUES('99744323Q')");
-			stmt.executeUpdate("INSERT INTO Cliente VALUES('77777777A')");
-			stmt.executeUpdate("INSERT INTO Cliente VALUES('77777777B')");
-			stmt.executeUpdate("INSERT INTO Cliente VALUES('77777777C')");
-			stmt.executeUpdate("INSERT INTO Cliente VALUES('77777777D')");
-		}catch(SQLException e){
-			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-		}*/
 
 		// Tabla EmpresaExterna
 		try{
 			stmt.executeUpdate("INSERT INTO EmpresaExterna VALUES('Transportes Paqui','paquiempresa@gmail.com')");
 			stmt.executeUpdate("INSERT INTO EmpresaExterna VALUES('Seguridad Paco SL.','pacosecurity@hotmail.com')");
 			stmt.executeUpdate("INSERT INTO EmpresaExterna VALUES('Refrigerios Martinez','noreplay@gmail.com')");
-	}catch(SQLException e){
+		}catch(SQLException e){
 			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
 
@@ -398,9 +378,7 @@ public void inicializar(){
 			stmt.executeUpdate("INSERT INTO Contiene VALUES(1000,sec_codigoenvio.currval,3)");
 			stmt.executeUpdate("INSERT INTO Pedido_Envio VALUES(sec_codigoenvio.nextval, 801 )");
 			stmt.executeUpdate("INSERT INTO Contiene VALUES(1001,sec_codigoenvio.currval,5)");
-
 		}catch(SQLException e){
-			System.out.println("El error está aquí");
 			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
 
@@ -409,7 +387,7 @@ public void inicializar(){
 			stmt.executeUpdate("INSERT INTO Evento VALUES (500,  TO_DATE('26/01/2022', 'dd/mm/yyyy'))");
 			stmt.executeUpdate("INSERT INTO Evento VALUES (501,  TO_DATE('29/01/2022', 'dd/mm/yyyy'))");
 			stmt.executeUpdate("INSERT INTO Evento VALUES (502,  TO_DATE('03/02/2022', 'dd/mm/yyyy'))");
-	}catch(SQLException e){
+		}catch(SQLException e){
 			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
 
@@ -427,7 +405,7 @@ public void inicializar(){
 			stmt.executeUpdate("INSERT INTO Incidencias_Informe VALUES (500, 'Ha vomitao un chiquillo')");
 			stmt.executeUpdate("INSERT INTO Incidencias_Informe VALUES (500, 'Ha habido un incendio')");
 			stmt.executeUpdate("INSERT INTO Incidencias_Informe VALUES (502, 'Se ha muerto un jugador')");
-	}catch(SQLException e){
+		}catch(SQLException e){
 			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
 
@@ -445,7 +423,7 @@ public void inicializar(){
 			stmt.executeUpdate("INSERT INTO Organiza VALUES (500, '76543123W')");
 			stmt.executeUpdate("INSERT INTO Organiza VALUES (502, '76544223W')");
 			stmt.executeUpdate("INSERT INTO Organiza VALUES (501, '76543123W')");
-	}catch(SQLException e){
+		}catch(SQLException e){
 			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
 
@@ -459,23 +437,7 @@ public void inicializar(){
 			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
 
-		/*
-		stmt.executeUpdate("INSERT INTO Empleado VALUES('76544223W')");
-		stmt.executeUpdate("INSERT INTO Empleado VALUES('76544434L')");
-		*/
-		// Tabla ComponenteActivo_Contrato
-		/*try{
-			stmt.executeUpdate("INSERT INTO ComponenteActivo_Contrato VALUES('76544313W', '76543123W')");
-			stmt.executeUpdate("INSERT INTO ComponenteActivo_Contrato VALUES('73133133A', '76544223W')");
-			stmt.executeUpdate("INSERT INTO ComponenteActivo_Contrato VALUES('75334239C', '76543123W')");
-		}catch(SQLException e){
-			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-		}*/
-
-		// Tabla AbonadoActivo_Contrata_Abono (Preferiblemente la inicializamos vacía)
-		//stmt.executeUpdate("INSERT INTO AbonadoActivo_Contrata_Abono VALUES ('42343423L', 21021, 1);");
-		//stmt.executeUpdate("INSERT INTO AbonadoActivo_Contrata_Abono VALUES ('99744323Q', 17532, 2);");
-
+		 
 		// Tabla EXTRADEPORTIVO
 		try{
 			stmt.executeUpdate("INSERT INTO Extradeportivo VALUES (501)");
@@ -491,13 +453,12 @@ public void inicializar(){
 			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
 
-		// Tabla AccesoAbonado (Preferiblemente la inicializamos vacía ya que va ligada a AbonadoActivo_Contrata_Abono)
-		//stmt.executeUpdate("INSERT INTO AccesoAbonado VALUES (502, 17532);");
+
 		System.out.println("Tuplas insertadas correctamente (100% reset...)");
 
 	}catch(SQLException e){
-    System.err.format("SQL exception: %s\n%s\n", e.getSQLState(), e.getMessage());
-  }
+		System.err.format("SQL exception: %s\n%s\n", e.getSQLState(), e.getMessage());
+	}
 }
 
 
@@ -506,222 +467,218 @@ public void inicializar(){
 
 
 public void eliminarTablas() throws SQLException {
-  try{
-    Statement stmt = connection.createStatement();
+	try{
+		Statement stmt = connection.createStatement();
 
 
 		//Se eliminan los disparadores
 		try{
 			stmt.executeUpdate("DROP TRIGGER actualizarcantidadVentaItems");
-			}catch(SQLException e){
-		  System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}catch(SQLException e){
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
 		try{
 			stmt.executeUpdate("DROP TRIGGER anadir_cliente_compratienda");
-			}catch(SQLException e){
-		  System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}catch(SQLException e){
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
 		try{
 			stmt.executeUpdate("DROP TRIGGER anadir_cliente_compraentrada");
-			}catch(SQLException e){
-		  System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}catch(SQLException e){
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
 		try{
 			stmt.executeUpdate("DROP TRIGGER anadir_cliente_abonado");
-			}catch(SQLException e){
-		  System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}catch(SQLException e){
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
-		/* try{
-			stmt.executeUpdate("DROP TRIGGER insertar_componente");
-			}catch(SQLException e){
-		  System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-		}  */
+		 
 		try{
 			stmt.executeUpdate("DROP TRIGGER insertar_abonado");
-			}catch(SQLException e){
-		  System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}catch(SQLException e){
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
 		try{
 			stmt.executeUpdate("DROP TRIGGER nuevo_pedido");
-			}catch(SQLException e){
-		  System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}catch(SQLException e){
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
 		try{
 			stmt.executeUpdate("DROP TRIGGER anadir_producto");
-			}catch(SQLException e){
-		  System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}catch(SQLException e){
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
 
 		System.out.println("Disparadores borrados correctamente (17% reset...)");
 
 		// Se elimina la Tabla AccesoABonado
 		try{
-    	stmt.executeUpdate("DROP TABLE AccesoAbonado");
+			stmt.executeUpdate("DROP TABLE AccesoAbonado");
 		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
 
 		// Se elimina la Tabla Extradeportivo
-    try{
+		try{
 			stmt.executeUpdate("DROP TABLE Extradeportivo");
 		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
 
 		// Se elimina la Tabla Partido
 		try{
 			stmt.executeUpdate("DROP TABLE Partido");
 		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
 
 		// Se elimina la Tabla AbonadoActivo_Contrata_Abono
 		try{
 			stmt.executeUpdate("DROP TABLE AbonadoActivo_Contrata_Abono");
 		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
 
 		// Se elimina la Tabla ComponenteActivo_Contrato
 		try{
 			stmt.executeUpdate("DROP TABLE ComponenteActivo_Contrato");
 		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
 
 		// Se elimina la Tabla Abonado
 		try{
 			stmt.executeUpdate("DROP TABLE Abonado");
 		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
 
 		// Se elimina la Tabla Organiza
 		try{
 			stmt.executeUpdate("DROP TABLE Organiza");
 		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
 
 		// Se elimina la Tabla Contratada
 		try{
 			stmt.executeUpdate("DROP TABLE Contratada");
 		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
 
 		// Se elimina la Tabla Incidencias_Informe
 		try{
 			stmt.executeUpdate("DROP TABLE Incidencias_Informe");
 		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
 
 		// Se elimina la Tabla Compra_Entrada_Acceso
 		try{
 			stmt.executeUpdate("DROP TABLE Compra_Entrada_Acceso");
 		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
 
 		// Se elimina la Tabla Evento
 		try{
 			stmt.executeUpdate("DROP TABLE Evento");
 		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
 
 		// Se elimina la Tabla Contiene
 		try{
 			stmt.executeUpdate("DROP TABLE Contiene");
 		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
 
 		// Se elimina la Tabla Pedido_Envio
 		try{
 			stmt.executeUpdate("DROP TABLE Pedido_Envio");
 		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
 
 		// Se elimina la Tabla CompraTienda
 		try{
 			stmt.executeUpdate("DROP TABLE CompraTienda");
 		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
 
 		// Se elimina la Tabla ProductoActivo
 		try{
 			stmt.executeUpdate("DROP TABLE ProductoActivo");
 		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
 
 		// Se elimina la Tabla Componente
 		try{
 			stmt.executeUpdate("DROP TABLE Componente");
 		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
 
 		// Se elimina la Tabla Empleado
 		try{
 			stmt.executeUpdate("DROP TABLE Empleado");
 		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
 
 		// Se elimina la Tabla EmpresaExterna
 		try{
 			stmt.executeUpdate("DROP TABLE EmpresaExterna");
 		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
 
 		// Se elimina la Tabla Cliente
 		try{
 			stmt.executeUpdate("DROP TABLE Cliente");
 		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
 
 		// Se elimina la Tabla Proveedor
 		try{
 			stmt.executeUpdate("DROP TABLE Proveedor");
 		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
 
 		// Se elimina la Tabla Producto
 		try{
 			stmt.executeUpdate("DROP TABLE Producto");
 		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
 
 
 		try{
 			stmt.executeUpdate("drop sequence sec_abonado");
 		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
 
 		try{
 			stmt.executeUpdate("drop sequence sec_codigoenvio");
 		}catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
 
 
 
-    connection.commit();
-    System.out.println("Tablas borradas correctamente (33% reset...)");
+		connection.commit();
+		System.out.println("Tablas borradas correctamente (33% reset...)");
 
-  }catch(SQLException e){
-    System.err.format("SQL exception: %s\n%s\n", e.getSQLState(), e.getMessage());
-  }
+	}catch(SQLException e){
+		System.err.format("SQL exception: %s\n%s\n", e.getSQLState(), e.getMessage());
+	}
 };
 
 
@@ -750,26 +707,26 @@ public void eliminarTablas() throws SQLException {
 				System.out.println("Componente con DNI: "+dni_componentes.get(i)+" eliminado por fin de contrato.");
 			}
 		}catch(SQLException e){
-	    System.err.format("SQL exception: %s\n%s\n", e.getSQLState(), e.getMessage());
-	  }
+			System.err.format("SQL exception: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
 	}
 
- // ALTA COMPONENTE
-  public void altaComponente(Statement statement) throws SQLException{
-    try{
-      Scanner input = new Scanner(System.in);
-		String dni;
-      	do{
+	// ALTA COMPONENTE
+	public void altaComponente(Statement statement) throws SQLException{
+		try{
+			Scanner input = new Scanner(System.in);
+			String dni;
+			do{
 				System.out.print("Introduzca el DNI del nuevo componente (formato 11111111X) :");
 				dni = input.nextLine();
-		  }while(!dni.matches("[0-9]{8}[a-zA-Z]"));
+			}while(!dni.matches("[0-9]{8}[a-zA-Z]"));
 
 
 			System.out.println("Introduzca los siguientes datos sobre el nuevo componente");
 			String nombre;
 			do{
 				System.out.print("Nombre completo :");
-				 nombre = input.nextLine();
+				nombre = input.nextLine();
 			}while(!nombre.matches("[^0-9]+"));
 
 			String direccion;
@@ -777,7 +734,7 @@ public void eliminarTablas() throws SQLException {
 				System.out.print("Dirección (Calle ..., N ..., Población) :");
 				direccion = input.nextLine();
 			}while(!direccion.matches("Calle +[^0-9]+, N +[0-9]+, +[^0-9]+"));
-			//[a-zA-Z]
+ 
 
 			String salario;
 			do{
@@ -806,18 +763,18 @@ public void eliminarTablas() throws SQLException {
 			//COMPROBAR QUE SON FECHAS
 
 			String fechainicio;
-		  	do{
+			do{
 				System.out.println("Fecha de inicio del contrato:");
 				fechainicio=input.nextLine();
-		  }while(!fechainicio.matches("[0-9]{2}/[0-9]{2}/[0-9]{4}"));
-		  fechainicio = "TO_DATE('"+fechainicio+"','dd/mm/yyyy')";
+			}while(!fechainicio.matches("[0-9]{2}/[0-9]{2}/[0-9]{4}"));
+			fechainicio = "TO_DATE('"+fechainicio+"','dd/mm/yyyy')";
 
 			String fechafin;
-		  	do{
+			do{
 				System.out.println("Fecha de fin del contrato:");
 				fechafin=input.nextLine();
-		  }while(!fechafin.matches("[0-9]{2}/[0-9]{2}/[0-9]{4}"));
-		  fechafin = "TO_DATE('"+fechafin+"','dd/mm/yyyy')";
+			}while(!fechafin.matches("[0-9]{2}/[0-9]{2}/[0-9]{4}"));
+			fechafin = "TO_DATE('"+fechafin+"','dd/mm/yyyy')";
 
 			try{
 				statement.executeUpdate("INSERT INTO Componente VALUES('"+ dni +"','" + nombre +"','" + direccion +"',"+ salario + ",'"+ correo+ "','" + telefono+"',"+clausula+ ","+fechainicio+"," + fechafin+ ")");
@@ -842,143 +799,139 @@ public void eliminarTablas() throws SQLException {
 				System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 			}
 
-      //connection.commit();
 
-    }catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
-  };
+		}catch(SQLException e){
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
+	};
 
- // BAJA COMPONENTE
-  public void bajaComponente(Statement statement) throws SQLException{
-    try{
-		Savepoint CheckPoint = connection.setSavepoint("BajaComponente");
+	// BAJA COMPONENTE
+	public void bajaComponente(Statement statement) throws SQLException{
+		try{
+			Savepoint CheckPoint = connection.setSavepoint("BajaComponente");
 
 
-	  	Scanner input = new Scanner(System.in);
+			Scanner input = new Scanner(System.in);
 
 			String dni;
-	   	do{
+			do{
 				System.out.print("Introduzca el DNI del componente que va a dar de baja (formato 11111111X) :");
 				dni = input.nextLine();
-	  	}while(!dni.matches("[0-9]{8}[a-zA-Z]"));
+			}while(!dni.matches("[0-9]{8}[a-zA-Z]"));
 
-      statement.executeUpdate("DELETE FROM ComponenteActivo_Contrato WHERE CDNI='" + dni +"'");
+			statement.executeUpdate("DELETE FROM ComponenteActivo_Contrato WHERE CDNI='" + dni +"'");
 
-		boolean terminar=false;
-		while(!terminar){
-		  System.out.println("\nIntroduzca:");
-		  System.out.println("\t1-Si quiere cancelar la baja del componente.");
-		  System.out.println("\t2-Para guardar la baja.");
+			boolean terminar=false;
+			while(!terminar){
+				System.out.println("\nIntroduzca:");
+				System.out.println("\t1-Si quiere cancelar la baja del componente.");
+				System.out.println("\t2-Para guardar la baja.");
 
-		  int opcion = input.nextInt();
+				int opcion = input.nextInt();
 
-			if(opcion==1){
-				connection.rollback(CheckPoint);
-				terminar=true;
+				if(opcion==1){
+					connection.rollback(CheckPoint);
+					terminar=true;
+				}
+				if(opcion==2){
+					connection.commit();
+					terminar=true;
+				}
 			}
-			if(opcion==2){
-				connection.commit();
-				terminar=true;
-			}
-		}
 
 		}catch(SQLException e){
 			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
-  };
+	};
 
-  // RENOVAR COMPONENTE
-  public void renovarComponente(Statement statement) throws SQLException{
-    try{
+	// RENOVAR COMPONENTE
+	public void renovarComponente(Statement statement) throws SQLException{
+		try{
 
-		Savepoint CheckPoint = connection.setSavepoint("RenovarComponente");
-		  Scanner input = new Scanner(System.in);
+			Savepoint CheckPoint = connection.setSavepoint("RenovarComponente");
+			Scanner input = new Scanner(System.in);
 
 			String dni;
-		  do{
+			do{
 				System.out.print("Introduzca el DNI del componente que va a renovar su contrato (formato 11111111X) :");
 				dni = input.nextLine();
-		  }while(!dni.matches("[0-9]{8}[a-zA-Z]"));
+			}while(!dni.matches("[0-9]{8}[a-zA-Z]"));
 
-		  String fechafin;
-		  do{
+			String fechafin;
+			do{
 				System.out.println("Introduzca la nueva fecha en la que finalizará su contrato:");
 				fechafin =input.nextLine();
-		  }while(!fechafin.matches("[0-9]{2}/[0-9]{2}/[0-9]{4}"));
-		  fechafin = "TO_DATE('"+fechafin+"','dd/mm/yyyy')";
+			}while(!fechafin.matches("[0-9]{2}/[0-9]{2}/[0-9]{4}"));
+			fechafin = "TO_DATE('"+fechafin+"','dd/mm/yyyy')";
 
 			String salario;
-		  do{
-			  System.out.println("Introduzca su nuevo salario (-1 si mantiene el mismo):");
-	      salario = input.nextLine();
-		  }while(!isNumeric(salario));
+			do{
+				System.out.println("Introduzca su nuevo salario (-1 si mantiene el mismo):");
+				salario = input.nextLine();
+			}while(!isNumeric(salario));
 
 			String clausula;
-		  do{
-			  System.out.println("Introduzca su nueva cláusula de rescisión (-1 si mantiene la misma):");
-	      clausula = input.nextLine();
-		  }while(!isNumeric(clausula));
+			do{
+				System.out.println("Introduzca su nueva cláusula de rescisión (-1 si mantiene la misma):");
+				clausula = input.nextLine();
+			}while(!isNumeric(clausula));
 
-		  if(salario.matches("-1")){
-			  if(clausula.matches("-1")){
-				   statement.executeUpdate("UPDATE Componente SET FechaFin="+fechafin+" WHERE CDNI='"+dni+"'");
-			  }
-			  else{
-				   statement.executeUpdate("UPDATE Componente SET Clausula_rescision="+clausula+", FechaFin="+fechafin+" WHERE CDNI='"+dni+"'");
-			  }
-		  }
-		  else{
-			  if(clausula.matches("-1")){
-				  statement.executeUpdate("UPDATE Componente SET Salario="+salario+", FechaFin="+fechafin+" WHERE CDNI='"+dni+"'");
-			  }
-			  else{
-				  statement.executeUpdate("UPDATE Componente SET Salario= "+salario+", Clausula_rescision="+clausula+", FechaFin="+fechafin+" WHERE CDNI='"+dni+"'");
-			  }
-		  }
+			if(salario.matches("-1")){
+				if(clausula.matches("-1")){
+					statement.executeUpdate("UPDATE Componente SET FechaFin="+fechafin+" WHERE CDNI='"+dni+"'");
+				}else{
+					statement.executeUpdate("UPDATE Componente SET Clausula_rescision="+clausula+", FechaFin="+fechafin+" WHERE CDNI='"+dni+"'");
+				}
+			}else{
+				if(clausula.matches("-1")){
+					statement.executeUpdate("UPDATE Componente SET Salario="+salario+", FechaFin="+fechafin+" WHERE CDNI='"+dni+"'");
+				} else{
+					statement.executeUpdate("UPDATE Componente SET Salario= "+salario+", Clausula_rescision="+clausula+", FechaFin="+fechafin+" WHERE CDNI='"+dni+"'");
+				}
+			}
 
-		boolean terminar=false;
-		while(!terminar){
-			System.out.println("\nIntroduzca:");
-		  System.out.println("\t1-Si quiere cancelar la renovacion del componente.");
-		  System.out.println("\t2-Para guardar la renovacion.");
+			boolean terminar=false;
+			while(!terminar){
+				System.out.println("\nIntroduzca:");
+				System.out.println("\t1-Si quiere cancelar la renovacion del componente.");
+				System.out.println("\t2-Para guardar la renovacion.");
 
-		  int opcion = input.nextInt();
+				int opcion = input.nextInt();
 
-			if(opcion==1){
+				if(opcion==1){
 				connection.rollback(CheckPoint);
 				terminar=true;
-			}
-			if(opcion==2){
+				}
+				if(opcion==2){
 				connection.commit();
 				terminar=true;
+				}
 			}
-		}
 
 		}catch(SQLException e){
 			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
-  };
+	};
 
 
-// LISTAR COMPONENTES
+	// LISTAR COMPONENTES
 
-  public void listarComponentes(Statement statement) throws SQLException{
-    try{
-      ResultSet componentes = statement.executeQuery("SELECT * FROM ComponenteActivo_Contrato INNER JOIN Componente ON ComponenteActivo_Contrato.CDNI = Componente.CDNI");
-      while(componentes.next()){
-           System.out.println(componentes.getString(1)+" "+componentes.getString(2)+" "+componentes.getString(4)+" "+componentes.getString(5)+" "+componentes.getString(6)+" "+componentes.getString(7)+" "+componentes.getString(8)+" "+componentes.getString(9)+" "+componentes.getString(10)+" "+componentes.getString(11));
-      }
+	public void listarComponentes(Statement statement) throws SQLException{
+		try{
+			ResultSet componentes = statement.executeQuery("SELECT * FROM ComponenteActivo_Contrato INNER JOIN Componente ON ComponenteActivo_Contrato.CDNI = Componente.CDNI");
+			while(componentes.next()){
+				System.out.println(componentes.getString(1)+" "+componentes.getString(2)+" "+componentes.getString(4)+" "+componentes.getString(5)+" "+componentes.getString(6)+" "+componentes.getString(7)+" "+componentes.getString(8)+" "+componentes.getString(9)+" "+componentes.getString(10)+" "+componentes.getString(11));
+			}
 
 		}catch(SQLException e){
 			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
-  };
+	};
 
 
 	// BALANCE DE CUENTAS
 	public void balanceCuentas(Statement statement) throws SQLException{
-    try{
+		try{
 			float presupuesto=0;
 			System.out.println("\n___________________________________________________");
 
@@ -1004,7 +957,7 @@ public void eliminarTablas() throws SQLException {
 			System.out.println("-"+String.valueOf(prescomp)+"€ (SUELDO COMPONENTES)");
 
 			// Cuenta Tienda
-				// productos vendidos
+			// productos vendidos
 			ResultSet tienda = statement.executeQuery("SELECT CompraTienda.Cantidad, Precio FROM CompraTienda, ProductoActivo WHERE CompraTienda.CProducto=ProductoActivo.CProducto");
 			float prestienda_vendidos=0;
 			float prestienda_pedidos=0;
@@ -1017,7 +970,7 @@ public void eliminarTablas() throws SQLException {
 			presupuesto += prestienda_vendidos;
 			System.out.println("+"+String.valueOf(prestienda_vendidos)+"€ (PRODUCTOS VENDIDOS)");
 
-				// productos en el inventario y productos en camino antes de recibirlos
+			// productos en el inventario y productos en camino antes de recibirlos
 			tienda = statement.executeQuery("SELECT Cantidad, Precio FROM ProductoActivo");
 			while(tienda.next()){
 				float cantidad=Float.parseFloat(tienda.getString(1));
@@ -1045,7 +998,7 @@ public void eliminarTablas() throws SQLException {
 		}catch(SQLException e){
 			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
-  };
+	};
 
 	public void menuEquipo() throws SQLException{
 		try{
@@ -1064,9 +1017,9 @@ public void eliminarTablas() throws SQLException {
 				System.out.println("\t1-Dar de alta componentes.");
 				System.out.println("\t2-Finalizar contrato.");
 				System.out.println("\t3-Renovar contrato.");
-    		System.out.println("\t4-Listar componentes.");
-    		System.out.println("\t5-Balance de cuentas.");
-    		System.out.println("\t6-Volver al menú principal.");
+				System.out.println("\t4-Listar componentes.");
+				System.out.println("\t5-Balance de cuentas.");
+				System.out.println("\t6-Volver al menú principal.");
 
 				opcion = input.nextInt();
 
@@ -1106,35 +1059,35 @@ public void eliminarTablas() throws SQLException {
 							}
 						}
 
+						break;
+
+				case 2:
+					bajaComponente(statement);
 					break;
 
-					case 2:
-					    bajaComponente(statement);
+				case 3:
+					renovarComponente(statement);
 					break;
 
-					case 3:
-					    renovarComponente(statement);
+				case 4:
+					listarComponentes(statement);
 					break;
 
-					case 4:
-					    listarComponentes(statement);
+				case 5:
+					balanceCuentas(statement);
 					break;
 
-					case 5:
-					    balanceCuentas(statement);
+				case 6:
+					terminar=true;
 					break;
 
-					case 6:
-					    terminar=true;
+				default:
+					System.out.println("Esta opción no es válida. Por favor, introduzca un número del 1 al 6");
 					break;
-
-					default:
-	      			System.out.println("Esta opción no es válida. Por favor, introduzca un número del 1 al 6");
-	  			break;
 				}
 			}
 
-			connection.commit();
+		connection.commit();
 		}catch(SQLException e){
 			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
@@ -1143,13 +1096,13 @@ public void eliminarTablas() throws SQLException {
 
 
 
-  ////////////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////////
-  //
-  //              EVENTOS
-  //
-  ////////////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+//
+//              EVENTOS
+//
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 
 	// Mostrar asientos libres
@@ -1184,7 +1137,7 @@ public void eliminarTablas() throws SQLException {
 					}
 				}
 				if(CAPACIDAD_ESTADIO!=ocupados.get(ocupados.size()-1)){
-						System.out.print("["+(ocupados.get(ocupados.size()-1)+1)+"-"+CAPACIDAD_ESTADIO+"], ");
+					System.out.print("["+(ocupados.get(ocupados.size()-1)+1)+"-"+CAPACIDAD_ESTADIO+"], ");
 				}
 			}else{
 				System.out.print("[1-"+CAPACIDAD_ESTADIO+"]");
@@ -1196,9 +1149,9 @@ public void eliminarTablas() throws SQLException {
 
 
 
-  // COMPRAR ENTRADAS
-  public void comprarEntradas(Statement statement) throws SQLException{
-  	try{
+	// COMPRAR ENTRADAS
+	public void comprarEntradas(Statement statement) throws SQLException{
+		try{
 			Scanner input = new Scanner(System.in);
 
 			// Decir que cliente eres pprimero
@@ -1211,18 +1164,18 @@ public void eliminarTablas() throws SQLException {
 
 			//statement.executeUpdate("INSERT INTO Cliente VALUES('"+DNI+"')");
 
-    	ResultSet listadoeventos = statement.executeQuery("SELECT * FROM EVENTO");
-    	while(listadoeventos.next()){
-         System.out.println(listadoeventos.getString(1)+" "+listadoeventos.getString(2));
-    	}
+			ResultSet listadoeventos = statement.executeQuery("SELECT * FROM EVENTO");
+			while(listadoeventos.next()){
+				System.out.println(listadoeventos.getString(1)+" "+listadoeventos.getString(2));
+			}
 
 			// COMPROBAR QUE EL EVENTO ES CORRECTO
 			System.out.println("Seleccione un evento:");
-    	String cevento = input.nextLine();
+			String cevento = input.nextLine();
 			ResultSet comprobar = statement.executeQuery("SELECT * FROM EVENTO WHERE CEvento="+cevento);
 			while(!comprobar.next()){
 				System.out.println("Ese evento no existe. Seleccione un evento:");
-	    	cevento = input.nextLine();
+				cevento = input.nextLine();
 				comprobar = statement.executeQuery("SELECT * FROM EVENTO WHERE CEvento="+cevento);
 			}
 
@@ -1234,64 +1187,64 @@ public void eliminarTablas() throws SQLException {
 			comprobar = statement.executeQuery("SELECT * FROM Compra_Entrada_Acceso WHERE num_asiento="+asiento+" AND CEvento="+cevento);
 			while(comprobar.next() || Integer.parseInt(asiento)<=0 || Integer.parseInt(asiento)>CAPACIDAD_ESTADIO){
 				System.out.println("Ese asiento no está disponible. Introduzca uno disponible:");
-	    	asiento = input.nextLine();
+				asiento = input.nextLine();
 				comprobar = statement.executeQuery("SELECT * FROM Compra_Entrada_Acceso WHERE num_asiento="+asiento);
 			}
 
-     	statement.executeQuery("INSERT INTO Compra_Entrada_Acceso VALUES('"+DNI+"',"+ cevento+","+asiento +")");
+			statement.executeQuery("INSERT INTO Compra_Entrada_Acceso VALUES('"+DNI+"',"+ cevento+","+asiento +")");
 
 		}catch(SQLException e){
 			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
-  };
+	};
 
 
 
 
-  // CONSULTAR PARTIDOS
-  public void consultarProximosPartidos(Statement statement) throws SQLException{
-    try{
-      ResultSet listadopartidos = statement.executeQuery("SELECT PARTIDO.CEVENTO, FECHA FROM PARTIDO, EVENTO WHERE PARTIDO.CEVENTO=EVENTO.CEVENTO ");
-      while(listadopartidos.next()){
-           System.out.println(listadopartidos.getString(1)+" "+listadopartidos.getString(2));
-      }
+	// CONSULTAR PARTIDOS
+	public void consultarProximosPartidos(Statement statement) throws SQLException{
+		try{
+			ResultSet listadopartidos = statement.executeQuery("SELECT PARTIDO.CEVENTO, FECHA FROM PARTIDO, EVENTO WHERE PARTIDO.CEVENTO=EVENTO.CEVENTO ");
+			while(listadopartidos.next()){
+				System.out.println(listadopartidos.getString(1)+" "+listadopartidos.getString(2));
+			}
 
 		}catch(SQLException e){
 			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
-  };
+	};
 
 
 
-  // CONSULTAR EXTRADEPORTIVOS
-  public void consultarProximosExtradeportivos(Statement statement) throws SQLException{
-    try{
+	// CONSULTAR EXTRADEPORTIVOS
+	public void consultarProximosExtradeportivos(Statement statement) throws SQLException{
+		try{
 			ResultSet listadoextradeportivos = statement.executeQuery("SELECT EXTRADEPORTIVO.CEVENTO, FECHA FROM EXTRADEPORTIVO, EVENTO WHERE EXTRADEPORTIVO.CEVENTO=EVENTO.CEVENTO ");
 
-      while(listadoextradeportivos.next()){
-           System.out.println(listadoextradeportivos.getString(1)+" "+listadoextradeportivos.getString(2));
-      }
+			while(listadoextradeportivos.next()){
+				System.out.println(listadoextradeportivos.getString(1)+" "+listadoextradeportivos.getString(2));
+			}
 
 		}catch(SQLException e){
 			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
-  };
+	};
 
 
 
-  // EMPRESAS EXTERNAS
-  public void empresasExternas(Statement statement) throws SQLException{
-    try{
+	// EMPRESAS EXTERNAS
+	public void empresasExternas(Statement statement) throws SQLException{
+		try{
 
-      ResultSet empresas = statement.executeQuery("SELECT * FROM EmpresaExterna ");
-      while(empresas.next()){
-           System.out.println(empresas.getString(1) + "\t" + empresas.getString(2));
-      }
+			ResultSet empresas = statement.executeQuery("SELECT * FROM EmpresaExterna ");
+			while(empresas.next()){
+				System.out.println(empresas.getString(1) + "\t" + empresas.getString(2));
+			}
 
 		}catch(SQLException e){
 			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
-  };
+	};
 
 
 	// Consultar incidencias
@@ -1304,56 +1257,56 @@ public void eliminarTablas() throws SQLException {
 			}else{
 				System.out.println("No hay incidencias registradas por el momento en este evento.");
 			}
-      while(no_vacio){
-         System.out.println(salida.getString(1));
-				 no_vacio = salida.next();
-      }
+			while(no_vacio){
+				System.out.println(salida.getString(1));
+				no_vacio = salida.next();
+			}
 		}catch(SQLException e){
 			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
 	}
 
-  // Registrar Incidencia
-  public void registrarIncidencia(Statement statement) throws SQLException{
-    try{
-      Scanner input = new Scanner(System.in);
+	// Registrar Incidencia
+	public void registrarIncidencia(Statement statement) throws SQLException{
+		try{
+			Scanner input = new Scanner(System.in);
 
-	  Savepoint CheckPoint = connection.setSavepoint("RegistrarIncidencia");
+			Savepoint CheckPoint = connection.setSavepoint("RegistrarIncidencia");
 
 			ResultSet listadoeventos = statement.executeQuery("SELECT * FROM EVENTO ");
-      while(listadoeventos.next()){
-           System.out.println(listadoeventos.getString(1)+" "+listadoeventos.getString(2));
-      }
+			while(listadoeventos.next()){
+				System.out.println(listadoeventos.getString(1)+" "+listadoeventos.getString(2));
+			}
 
-	  	// Preguntamos sobre el evento de la incidencia
-      System.out.println("Seleccione un evento sobre el que quieras registrar la incidencia:");
-      String cevento = input.nextLine();
+			// Preguntamos sobre el evento de la incidencia
+			System.out.println("Seleccione un evento sobre el que quieras registrar la incidencia:");
+			String cevento = input.nextLine();
 			ResultSet comprobacion = statement.executeQuery("SELECT * FROM EVENTO WHERE cevento="+cevento);
 
 			// Si no existe un evento con código cevento
 			while(!comprobacion.next()){
 				System.out.println("No existe ningún Evento " +cevento+".\n Por favor, seleccione un evento existente sobre el que quieras registrar la incidencia:");
-	      cevento = input.nextLine();
+				cevento = input.nextLine();
 				comprobacion = statement.executeQuery("SELECT * FROM EVENTO WHERE cevento="+cevento);
 			}
 
 			// Mostramos las incidencias ya registradas en ese evento si las hay.
 			mostrarIncidencias(statement, cevento);
 
-	  	//COMPROBAR QUE DICHA INCIDENCIA NO ESTÁ YA REGISTRADA: Idea, hacer el insert sí o sí. En caso de clave duplicada
+			//COMPROBAR QUE DICHA INCIDENCIA NO ESTÁ YA REGISTRADA: Idea, hacer el insert sí o sí. En caso de clave duplicada
 			// dará una excepción
-      System.out.println("Introduzca la nueva incidencia");
-      String incidencia = input.nextLine();
+			System.out.println("Introduzca la nueva incidencia");
+			String incidencia = input.nextLine();
 
-	    statement.executeUpdate("INSERT INTO Incidencias_Informe VALUES("+ cevento +",'" + incidencia + "')");
+			statement.executeUpdate("INSERT INTO Incidencias_Informe VALUES("+ cevento +",'" + incidencia + "')");
 
 			boolean fin=false;
 			while(!fin){
 				System.out.println("\nIntroduzca:");
-			  System.out.println("\t1-Si quiere cancelar el registro de incidencia.");
-			  System.out.println("\t2-Para guardar el registro.");
+				System.out.println("\t1-Si quiere cancelar el registro de incidencia.");
+				System.out.println("\t2-Para guardar el registro.");
 
-			  int opcion = input.nextInt();
+				int opcion = input.nextInt();
 
 				if(opcion==1){
 					connection.rollback(CheckPoint);
@@ -1370,128 +1323,128 @@ public void eliminarTablas() throws SQLException {
 			mostrarIncidencias(statement, cevento);
 
 
-    }catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
-  };
+		}catch(SQLException e){
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
+	};
 
 
 
 
-  // MENU
-  public void menuEventos() throws SQLException{
-    try{
+	// MENU
+	public void menuEventos() throws SQLException{
+		try{
 
-      Scanner input = new Scanner(System.in);
-      Statement statement = connection.createStatement();
-      int opcion;
+			Scanner input = new Scanner(System.in);
+			Statement statement = connection.createStatement();
+			int opcion;
 
-      boolean terminar = false;
+			boolean terminar = false;
 
-		// SAVEPOINT
-		Savepoint CheckPoint = connection.setSavepoint("SinDetalles");
+			// SAVEPOINT
+			Savepoint CheckPoint = connection.setSavepoint("SinDetalles");
 
 
-      while (!terminar){
+			while (!terminar){
 				System.out.println("\nMENÚ EVENTOS");
-        System.out.println("\nIntroduzca una opcion del 1 al 6:");
-        System.out.println("\t1-Comprar entrada.");
-        System.out.println("\t2-Consultar próximos partidos.");
-        System.out.println("\t3-Consultar próximos eventos-extradeportivos.");
-        System.out.println("\t4-Empresas externas.");
-        System.out.println("\t5-Registrar informe del evento.");
-        System.out.println("\t6-Volver al menú principal.");
+				System.out.println("\nIntroduzca una opcion del 1 al 6:");
+				System.out.println("\t1-Comprar entrada.");
+				System.out.println("\t2-Consultar próximos partidos.");
+				System.out.println("\t3-Consultar próximos eventos-extradeportivos.");
+				System.out.println("\t4-Empresas externas.");
+				System.out.println("\t5-Registrar informe del evento.");
+				System.out.println("\t6-Volver al menú principal.");
 
-        opcion = input.nextInt();
+				opcion = input.nextInt();
 
-        switch(opcion){
-          case 1:
+				switch(opcion){
+					case 1:
 
-		  	Savepoint CheckPoint1 = connection.setSavepoint("CompraEntrada");
+						Savepoint CheckPoint1 = connection.setSavepoint("CompraEntrada");
 
-				boolean fin=false;
-				while(!fin){
-					comprarEntradas(statement);
+						boolean fin=false;
+						while(!fin){
+							comprarEntradas(statement);
 
-					int op=0;
-					while(op!=1 && op!=2 && op!=3){
-						System.out.println("\nIntroduzca:");
-						System.out.println("\t1-Para seguir comprando.");
-						System.out.println("\t2-Si quiere cancelar sus compras.");
-						System.out.println("\t3-Para guardar las compras.");
+							int op=0;
+							while(op!=1 && op!=2 && op!=3){
+								System.out.println("\nIntroduzca:");
+								System.out.println("\t1-Para seguir comprando.");
+								System.out.println("\t2-Si quiere cancelar sus compras.");
+								System.out.println("\t3-Para guardar las compras.");
 
-						op = input.nextInt();
-					}
+								op = input.nextInt();
+							}
 
-					switch(op){
-						case 1:
-							break;
-						case 2:
-							connection.rollback(CheckPoint1);
-							fin=true;
-							break;
-						case 3:
-							connection.commit();
-							fin=true;
-							break;
-						default:
-							break;
-					}
-				}
+							switch(op){
+								case 1:
+									break;
+								case 2:
+									connection.rollback(CheckPoint1);
+									fin=true;
+									break;
+								case 3:
+									connection.commit();
+									fin=true;
+									break;
+								default:
+									break;
+							}
+						}
 
 
-          break;
+						break;
 
-          case 2:
-              consultarProximosPartidos(statement);
-          break;
-
-          case 3:
-              consultarProximosExtradeportivos(statement);
-          break;
-
-				  case 4:
-				  		empresasExternas(statement);
-				  break;
-
-				  case 5:
-				  		registrarIncidencia(statement);
+					case 2:
+					consultarProximosPartidos(statement);
 					break;
 
-          case 6:
-              terminar=true;
-          break;
+					case 3:
+					consultarProximosExtradeportivos(statement);
+					break;
 
-			   	default:
-			      	System.out.println("Esta opción no es válida. Por favor, introduzca un número del 1 al 7");
-			  	break;
-        }
-      }
+					case 4:
+					empresasExternas(statement);
+					break;
 
-      connection.commit();
-    }catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
-  };
+					case 5:
+					registrarIncidencia(statement);
+					break;
+
+					case 6:
+					terminar=true;
+					break;
+
+					default:
+					System.out.println("Esta opción no es válida. Por favor, introduzca un número del 1 al 7");
+					break;
+				}
+			}
+
+			connection.commit();
+		}catch(SQLException e){
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
+	};
 
 
 
-  ////////////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////////
-  //
-  //              ABONADOS
-  //
-  ////////////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+//
+//              ABONADOS
+//
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 	// Mostrar asientos ocupados
 	public void mostrarAsientosOcupadosAbono(Statement statement) throws SQLException{
 		try{
 			System.out.println("ASIENTOS OCUPADOS PARA LA TEMPORADA - SECCIÓN ABONADO.");
-      		ResultSet asientos = statement.executeQuery("SELECT num_asiento FROM AbonadoActivo_Contrata_Abono ");
-      		while(asientos.next()){
-           		System.out.print("ASIENTO: " + asientos.getString(1)+ "\t ");
-      		}
+			ResultSet asientos = statement.executeQuery("SELECT num_asiento FROM AbonadoActivo_Contrata_Abono ");
+			while(asientos.next()){
+				System.out.print("ASIENTO: " + asientos.getString(1)+ "\t ");
+			}
 		}catch(SQLException e){
 			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
@@ -1514,7 +1467,7 @@ public void eliminarTablas() throws SQLException {
 
 			if(ocupados.size()>0){
 				if(1!=ocupados.get(0)){
-						System.out.print("[1-"+(ocupados.get(0)-1)+"], ");
+					System.out.print("[1-"+(ocupados.get(0)-1)+"], ");
 				}
 				for(int i=0; i<ocupados.size()-1; i++){
 					if(ocupados.get(i)+1<=ocupados.get(i+1)-1){
@@ -1522,7 +1475,7 @@ public void eliminarTablas() throws SQLException {
 					}
 				}
 				if(CAPACIDAD_ESTADIO!=ocupados.get(ocupados.size()-1)){
-						System.out.print("["+(ocupados.get(ocupados.size()-1)+1)+"-"+CAPACIDAD_ESTADIO+"], ");
+					System.out.print("["+(ocupados.get(ocupados.size()-1)+1)+"-"+CAPACIDAD_ESTADIO+"], ");
 				}
 			}else{
 				System.out.print("[1-"+CAPACIDAD_ESTADIO+"]");
@@ -1534,14 +1487,14 @@ public void eliminarTablas() throws SQLException {
 
 	/*
 	DAR DE ALTA ABONADO
-		Crear una ficha nueva de abonado no registrado actualmente en el sistema y que
-		haya aportado la cantidad de 150€. El abonado proporciona al sistema un correo
-		electrónico, nombre, apellidos, año de alta, dni, teléfono y asiento. Hay que
-		asegurarse de que el asiento se encuentra disponible. El dni no puede estar
-		repetido. Se almacena en la base de datos los datos personales del abonado y
-		se devuelve en la salida el número de abonado correspondiente. El número de
-		abonados aumenta en uno. Como salida se proporciona su número de abonado
-		correspondiente (es único).
+	Crear una ficha nueva de abonado no registrado actualmente en el sistema y que
+	haya aportado la cantidad de 150€. El abonado proporciona al sistema un correo
+	electrónico, nombre, apellidos, año de alta, dni, teléfono y asiento. Hay que
+	asegurarse de que el asiento se encuentra disponible. El dni no puede estar
+	repetido. Se almacena en la base de datos los datos personales del abonado y
+	se devuelve en la salida el número de abonado correspondiente. El número de
+	abonados aumenta en uno. Como salida se proporciona su número de abonado
+	correspondiente (es único).
 	*/
 	public void altaAbonado(Statement statement) throws SQLException{
 		try{
@@ -1585,8 +1538,6 @@ public void eliminarTablas() throws SQLException {
 					System.out.print("Teléfono :");
 					telefono = input.nextLine();
 				}while(!telefono.matches("[0-9]{9}"));
-
-				//statement.executeUpdate("INSERT INTO Cliente VALUES('"+DNI+"')");
 
 			}
 
@@ -1648,8 +1599,8 @@ public void eliminarTablas() throws SQLException {
 
 	/*
 	DAR DE BAJA ABONADO
-		El sistema elimina la ficha del abonado cuyo número de abonado se indica en
-		la entrada y deja libre su asiento correspondiente
+	El sistema elimina la ficha del abonado cuyo número de abonado se indica en
+	la entrada y deja libre su asiento correspondiente
 	*/
 	public void bajaAbonado(Statement statement) throws SQLException{
 		try{
@@ -1703,7 +1654,7 @@ public void eliminarTablas() throws SQLException {
 
 	/*
 	MOSTRAR INFORMACIÓN ABONADO
-		Muestra la información de un abonado
+	Muestra la información de un abonado
 	*/
 	public void mostrarInfoAbonado(Statement statement) throws SQLException{
 		try{
@@ -1741,39 +1692,37 @@ public void eliminarTablas() throws SQLException {
 	}
 
 	/*
-		ENVÍO DE NOTICIAS
+	ENVÍO DE NOTICIAS
 	*/
 	public static void sendEmail(Session session, String toEmail, String subject, String body){
-		try
-	    {
-	      MimeMessage msg = new MimeMessage(session);
-	      //set message headers
-	      msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
-	      msg.addHeader("format", "flowed");
-	      msg.addHeader("Content-Transfer-Encoding", "8bit");
+		try {
+			MimeMessage msg = new MimeMessage(session);
+			//set message headers
+			msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
+			msg.addHeader("format", "flowed");
+			msg.addHeader("Content-Transfer-Encoding", "8bit");
 
-	      msg.setFrom(new InternetAddress("no_reply@example.com", "Los Serrano"));
+			msg.setFrom(new InternetAddress("no_reply@example.com", "Los Serrano"));
 
-	      msg.setReplyTo(InternetAddress.parse("no_reply@example.com", false));
+			msg.setReplyTo(InternetAddress.parse("no_reply@example.com", false));
 
-	      msg.setSubject(subject, "UTF-8");
+			msg.setSubject(subject, "UTF-8");
 
-	      msg.setText(body, "UTF-8");
+			msg.setText(body, "UTF-8");
 
-	      msg.setSentDate(new Date());
+			msg.setSentDate(new Date());
 
-	      msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
-    	  Transport.send(msg);
+			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
+			Transport.send(msg);
 
-	      System.out.print(".");
-	    }
-	    catch (Exception e) {
-	      e.printStackTrace();
-	    }
+			System.out.print(".");
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/*
-		Fuente: https://www.journaldev.com/2532/javamail-example-send-mail-in-java-smtp
+	Fuente: https://www.journaldev.com/2532/javamail-example-send-mail-in-java-smtp
 	*/
 	public void envioNoticias(Statement statement) throws SQLException{
 
@@ -1792,7 +1741,7 @@ public void eliminarTablas() throws SQLException {
 			//override the getPasswordAuthentication method
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(fromEmail, password);
-			}
+				}
 		};
 
 		Session session = Session.getDefaultInstance(props, auth);
@@ -1823,7 +1772,7 @@ public void eliminarTablas() throws SQLException {
 
 	/*
 	MOSTRAR LISTADO DE ABONADOS
-		Muestra la lista de todos los abonados
+	Muestra la lista de todos los abonados
 	*/
 
 	public void listadoAbonados(Statement statement) throws SQLException{
@@ -1845,123 +1794,122 @@ public void eliminarTablas() throws SQLException {
 
 
 
-  public void menuAbonados() throws SQLException{
-    try{
+	public void menuAbonados() throws SQLException{
+		try{
 
-      Scanner input = new Scanner(System.in);
-      Statement statement = connection.createStatement();
-      int opcion;
+			Scanner input = new Scanner(System.in);
+			Statement statement = connection.createStatement();
+			int opcion;
 
-      boolean terminar = false;
+			boolean terminar = false;
 
-      while (!terminar){
+			while (!terminar){
 				System.out.println("\nMENÚ ABONADOS");
-        System.out.println("\nIntroduzca una opcion del 1 al 7:");
-        System.out.println("\t1-Dar de alta abonado.");
-        System.out.println("\t2-Dar de baja abonado.");
-        System.out.println("\t3-Mostrar información de un abonado.");
-        System.out.println("\t4-Mostrar listado de abonados.");
-        System.out.println("\t5-Envío noticias.");
-        System.out.println("\t6-Mostrar asientos ocupados.");
-        System.out.println("\t7-Volver al menú principal.");
+				System.out.println("\nIntroduzca una opcion del 1 al 7:");
+				System.out.println("\t1-Dar de alta abonado.");
+				System.out.println("\t2-Dar de baja abonado.");
+				System.out.println("\t3-Mostrar información de un abonado.");
+				System.out.println("\t4-Mostrar listado de abonados.");
+				System.out.println("\t5-Envío noticias.");
+				System.out.println("\t6-Mostrar asientos ocupados.");
+				System.out.println("\t7-Volver al menú principal.");
 
-        opcion = input.nextInt();
+				opcion = input.nextInt();
 
-        switch(opcion){
-          case 1:
-
-		  Savepoint CheckPoint1 = connection.setSavepoint("AltaAbonados");
-
-			boolean fin=false;
-			while(!fin){
-				altaAbonado(statement);
-
-				int op=0;
-				while(op!=1 && op!=2 && op!=3){
-					System.out.println("\nIntroduzca:");
-					System.out.println("\t1-Para seguir dando de alta.");
-					System.out.println("\t2-Si quiere cancelar la alta de abonados.");
-					System.out.println("\t3-Para guardar los abonados dados de alta.");
-					op = input.nextInt();
-				}
-
-				switch(op){
+				switch(opcion){
 					case 1:
+
+						Savepoint CheckPoint1 = connection.setSavepoint("AltaAbonados");
+
+						boolean fin=false;
+						while(!fin){
+							altaAbonado(statement);
+
+							int op=0;
+							while(op!=1 && op!=2 && op!=3){
+								System.out.println("\nIntroduzca:");
+								System.out.println("\t1-Para seguir dando de alta.");
+								System.out.println("\t2-Si quiere cancelar la alta de abonados.");
+								System.out.println("\t3-Para guardar los abonados dados de alta.");
+								op = input.nextInt();
+							}
+
+							switch(op){
+								case 1:
+									break;
+								case 2:
+									connection.rollback(CheckPoint1);
+									fin=true;
+									break;
+								case 3:
+									connection.commit();
+									fin=true;
+									break;
+								default:
+									break;
+							}
+						}
 						break;
+
 					case 2:
-						connection.rollback(CheckPoint1);
-						fin=true;
+						bajaAbonado(statement);
 						break;
+
 					case 3:
-						connection.commit();
-						fin=true;
+						mostrarInfoAbonado(statement);
 						break;
+
+					case 4:
+						listadoAbonados(statement);
+						break;
+
+					case 5:
+						envioNoticias(statement);
+						break;
+
+					case 6:
+						mostrarAsientosOcupadosAbono(statement);
+						break;
+
+					case 7:
+						terminar=true;
+						break;
+
 					default:
+						System.out.println("Esta opción no es válida. Por favor, introduzca un número del 1 al 7");
 						break;
 				}
 			}
-          break;
 
-          case 2:
-            bajaAbonado(statement);
-          break;
-
-          case 3:
-			  		mostrarInfoAbonado(statement);
-          break;
-
-          case 4:
-			  		listadoAbonados(statement);
-
-          break;
-
-				  case 5:
-						envioNoticias(statement);
-				  break;
-
-          case 6:
-					  mostrarAsientosOcupadosAbono(statement);
-				  break;
-
-				  case 7:
-			  	  terminar=true;
-				  break;
-
-			   	default:
-			      System.out.println("Esta opción no es válida. Por favor, introduzca un número del 1 al 7");
-		  		break;
-        }
-      }
-
-      connection.commit();
-    }catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
-  };
+			connection.commit();
+		}catch(SQLException e){
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
+	};
 
 
 
 
-  ////////////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////////
-  //
-  //              TIENDA
-  //
-  ////////////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+//
+//              TIENDA
+//
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 
 
-  // VENDER ITEMS
-  public void venderItems(Statement statement) throws SQLException{
-    try{
-		  Scanner input = new Scanner(System.in);
-		  Scanner input1 = new Scanner(System.in);
+	// VENDER ITEMS
+	public void venderItems(Statement statement) throws SQLException{
+		try{
+			Scanner input = new Scanner(System.in);
+			Scanner input1 = new Scanner(System.in);
 
 			// Decir que cliente eres pprimero
 			System.out.println("Para efectuar la compra tiene que ser cliente. Díganos el DNI del cliente:");
 			String DNI;
 			do{
-				System.out.print("DNI (formato 11111111X) :");
+				System.out.print("DNI (formato 11111111X):");
 				DNI = input.nextLine();
 			}while(!DNI.matches("[0-9]{8}[a-zA-Z]"));
 
@@ -1969,7 +1917,7 @@ public void eliminarTablas() throws SQLException {
 
 			int opcion=0;
 			while(opcion!=-1){
-				//COMPROBAR QUE EL CÓDIGO ES CORRECTO
+ 
 				mostrarInventario(statement);
 				System.out.println("Seleccione el producto a vender:");
 				String cproducto = input.nextLine();
@@ -2023,22 +1971,24 @@ public void eliminarTablas() throws SQLException {
 		}catch(SQLException e){
 			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
-  };
+	};
 
-   // REALIZAR PEDIDO
-  public void realizarPedido(Statement statement) throws SQLException{
-    try{
-      Scanner input = new Scanner(System.in);
-		// SAVEPOINT
-		Savepoint CheckPoint = connection.setSavepoint("RealizarPedido");
-	  	//COMPROBAR QUE EXISTE DICHO PROVEEDOR
+	// REALIZAR PEDIDO
+	public void realizarPedido(Statement statement) throws SQLException{
+		try{
+			Scanner input = new Scanner(System.in);
+			// SAVEPOINT
+			Savepoint CheckPoint = connection.setSavepoint("RealizarPedido");
+
+			//COMPROBAR QUE EXISTE DICHO PROVEEDOR
 			ResultSet lista_proveedores = statement.executeQuery("SELECT CProveedor FROM Proveedor");
 			System.out.println("LISTA PROVEEDORES");
 			while(lista_proveedores.next()){
 				System.out.println("\t"+lista_proveedores.getString(1));
 			}
 			System.out.println("Introduzca el proveedor al que se realizar el pedido:");
-      		String cproveedor = input.nextLine();
+			String cproveedor = input.nextLine();
+			
 			ResultSet comprobarproveedor = statement.executeQuery("SELECT * FROM Proveedor WHERE CProveedor="+cproveedor);
 			while(!comprobarproveedor.next()){
 				System.out.println("No existe ningún proveedor con ese código. Por favor introduce un código de proveedor existente:");
@@ -2049,12 +1999,12 @@ public void eliminarTablas() throws SQLException {
 
 			statement.executeUpdate("INSERT INTO Pedido_Envio VALUES(sec_codigoenvio.nextval," + cproveedor +")");
 
-		  boolean anadir_producto = true;
-		  int contador=0;
+			boolean anadir_producto = true;
+			int contador=0;
 
 			String cproducto;
 			String pedir_cantidad;
-		  while(anadir_producto){
+			while(anadir_producto){
 
 				ResultSet lista_cproductos = statement.executeQuery("SELECT CProducto FROM ProductoActivo");
 				System.out.println("\nLISTA PRODUCTOS");
@@ -2074,14 +2024,14 @@ public void eliminarTablas() throws SQLException {
 					anadir_producto = false;
 				}else{
 					do{
-			  			System.out.println("Introduzca la cantidad del producto que se quiere pedir:");
-	      				pedir_cantidad = input.nextLine();
-		  			}while(!isNumeric(pedir_cantidad) && (Integer.parseInt(pedir_cantidad)<=0) );
-	      			statement.executeUpdate("INSERT INTO Contiene VALUES("+ cproducto+",sec_codigoenvio.currval," + pedir_cantidad +")");
+						System.out.println("Introduzca la cantidad del producto que se quiere pedir:");
+						pedir_cantidad = input.nextLine();
+					}while(!isNumeric(pedir_cantidad) && (Integer.parseInt(pedir_cantidad)<=0) );
+					statement.executeUpdate("INSERT INTO Contiene VALUES("+ cproducto+",sec_codigoenvio.currval," + pedir_cantidad +")");
 					contador++;
 				}
 
-	  	}
+			}
 
 			int opcion=0;
 			while(opcion!=1 && opcion!=2){
@@ -2093,46 +2043,46 @@ public void eliminarTablas() throws SQLException {
 
 
 
-				if(opcion==1){
-					connection.rollback(CheckPoint);
-				}
-				if(opcion==2){
-					connection.commit();
-				}
+			if(opcion==1){
+				connection.rollback(CheckPoint);
+			}
+			if(opcion==2){
+				connection.commit();
+			}
 
-    }catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
-  };
+		}catch(SQLException e){
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
+	};
 
 
-   // ALTA PRODUCTO
-  public void altaProducto(Statement statement) throws SQLException{
-    try{
-      Scanner input = new Scanner(System.in);
+	// ALTA PRODUCTO
+	public void altaProducto(Statement statement) throws SQLException{
+		try{
+			Scanner input = new Scanner(System.in);
 
-      System.out.println("Introduzca el código asociado al nuevo producto:");
-      String cproducto = input.nextLine();
+			System.out.println("Introduzca el código asociado al nuevo producto:");
+			String cproducto = input.nextLine();
 
-      ResultSet salida = statement.executeQuery("SELECT CProducto FROM ProductoActivo WHERE cproducto=" +cproducto);
+			ResultSet salida = statement.executeQuery("SELECT CProducto FROM ProductoActivo WHERE cproducto=" +cproducto);
 			while(salida.next()){
-			  System.out.println("Ya existe un producto con dicho código, introduzca uno nuevo: ");
-			  cproducto = input.nextLine();
-			  salida = statement.executeQuery("SELECT CProducto FROM Producto WHERE cproducto=" +cproducto);
-		  }
+				System.out.println("Ya existe un producto con dicho código, introduzca uno nuevo: ");
+				cproducto = input.nextLine();
+				salida = statement.executeQuery("SELECT CProducto FROM Producto WHERE cproducto=" +cproducto);
+			}
 
 
-      String cantidad;
+			String cantidad;
 			do{
-			  System.out.println("Introduzca la cantidad disponible del nuevo producto:");
-    	  cantidad = input.nextLine();
-		  }while(!isNumeric(cantidad));
+				System.out.println("Introduzca la cantidad disponible del nuevo producto:");
+				cantidad = input.nextLine();
+			}while(!isNumeric(cantidad));
 
 			String precio;
-		  do{
-			  System.out.println("Introduzca el precio inicial del nuevo producto:");
-        precio = input.nextLine();
-		  }while(!isNumeric(precio) && Integer.parseInt(precio)<=0);
+			do{
+				System.out.println("Introduzca el precio inicial del nuevo producto:");
+				precio = input.nextLine();
+			}while(!isNumeric(precio) && Integer.parseInt(precio)<=0);
 
 			try{
 				statement.executeUpdate("INSERT INTO ProductoActivo VALUES("+ cproducto +"," + cantidad +"," + precio + ")");
@@ -2140,37 +2090,37 @@ public void eliminarTablas() throws SQLException {
 				System.out.println("El producto "+cproducto+ " ya era un producto activo");
 			}
 
-    }catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
-  };
+		}catch(SQLException e){
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
+	};
 
-  // BAJA PRODUCTO
-  public void bajaProducto(Statement statement) throws SQLException{
-    try{
-	  Scanner input = new Scanner(System.in);
-		// SAVEPOINT
-		Savepoint CheckPoint = connection.setSavepoint("BajaProducto");
-     mostrarInventario(statement);
+	// BAJA PRODUCTO
+	public void bajaProducto(Statement statement) throws SQLException{
+		try{
+			Scanner input = new Scanner(System.in);
+			// SAVEPOINT
+			Savepoint CheckPoint = connection.setSavepoint("BajaProducto");
+			mostrarInventario(statement);
 
-	System.out.println("Seleccione el producto que va a dejar de ser activo:");
-    String cproducto = input.nextLine();
+			System.out.println("Seleccione el producto que va a dejar de ser activo:");
+			String cproducto = input.nextLine();
 
-		ResultSet comprobar = statement.executeQuery("SELECT CPedido FROM Contiene WHERE CProducto="+cproducto);
-		boolean pedido_en_curso = comprobar.next();
-		if(!pedido_en_curso){
+			ResultSet comprobar = statement.executeQuery("SELECT CPedido FROM Contiene WHERE CProducto="+cproducto);
+			boolean pedido_en_curso = comprobar.next();
+			if(!pedido_en_curso){
 			statement.executeUpdate("DELETE FROM ProductoActivo WHERE CProducto=" + cproducto );
 
 
-		int opcion=0;
-		while(opcion!=1 && opcion!=2){
-			System.out.println("\nIntroduzca:");
-		System.out.println("\t1-Si quiere cancelar la baja del producto.");
-		System.out.println("\t2-Para aceptar la baja del producto.");
+				int opcion=0;
+				while(opcion!=1 && opcion!=2){
+					System.out.println("\nIntroduzca:");
+					System.out.println("\t1-Si quiere cancelar la baja del producto.");
+					System.out.println("\t2-Para aceptar la baja del producto.");
 
-		opcion = input.nextInt();
+					opcion = input.nextInt();
 
-		}
+				}
 
 				if(opcion==1){
 					connection.rollback(CheckPoint);
@@ -2178,77 +2128,77 @@ public void eliminarTablas() throws SQLException {
 				if(opcion==2){
 					connection.commit();
 				}
-	}else{
-		ArrayList<String> cpedido = new ArrayList<String>();
-		cpedido.add(comprobar.getString(1));
+			}else{
+				ArrayList<String> cpedido = new ArrayList<String>();
+				cpedido.add(comprobar.getString(1));
 
-		while(comprobar.next()){
-			cpedido.add(comprobar.getString(1));
-		}
-		String salida="¡ATENCIÓN! Hay pedidos (Pedidos: ";
-		for(int i=0; i<cpedido.size();i++){
-			salida+=cpedido.get(i)+", ";
-		}
-		salida+=") de este producto y no se podrá de dar de baja hasta que se reciban los pedidos de este producto.\n";
-		System.out.println(salida);
-	}
+				while(comprobar.next()){
+					cpedido.add(comprobar.getString(1));
+				}
+				String salida="¡ATENCIÓN! Hay pedidos (Pedidos: ";
+				for(int i=0; i<cpedido.size();i++){
+					salida+=cpedido.get(i)+", ";
+				}
+				salida+=") de este producto y no se podrá de dar de baja hasta que se reciban los pedidos de este producto.\n";
+				System.out.println(salida);
+			}
 
 		}catch(SQLException e){
 			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
-  };
+	};
 
 
-  // MOSTRAR INVENTARIO
-  public void mostrarInventario(Statement statement) throws SQLException{
-    try{
-      ResultSet inventario = statement.executeQuery("SELECT * FROM ProductoActivo ");
+	// MOSTRAR INVENTARIO
+	public void mostrarInventario(Statement statement) throws SQLException{
+		try{
+			ResultSet inventario = statement.executeQuery("SELECT * FROM ProductoActivo ");
 			System.out.println("\nCÓDIGO\tUDS\tPRECIO(€)");
-      while(inventario.next()){
-      	System.out.println(inventario.getString(1)+"\t"+inventario.getString(2)+"\t"+inventario.getString(3));
-      }
+			while(inventario.next()){
+				System.out.println(inventario.getString(1)+"\t"+inventario.getString(2)+"\t"+inventario.getString(3));
+			}
 
 		}catch(SQLException e){
 			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
-  };
+	};
 
-   // RECIBIR PEDIDO
- public void recibirPedido(Statement statement) throws SQLException{
-    try{
-	  	Scanner input = new Scanner(System.in);
-		  // SAVEPOINT
-		  Savepoint CheckPoint = connection.setSavepoint("RecibirPedido");
+	// RECIBIR PEDIDO
+	public void recibirPedido(Statement statement) throws SQLException{
+		try{
+			Scanner input = new Scanner(System.in);
+			// SAVEPOINT
+			Savepoint CheckPoint = connection.setSavepoint("RecibirPedido");
 
 			System.out.println("LISTA PEDIDOS PENDIENTES DE RECEPCIÓN");
-      ResultSet pedidos = statement.executeQuery("SELECT * FROM Pedido_Envio ");
-      while(pedidos.next()){
-      	System.out.println(pedidos.getString(1)+" "+pedidos.getString(2));
-      }
+			ResultSet pedidos = statement.executeQuery("SELECT * FROM Pedido_Envio ");
+			while(pedidos.next()){
+				System.out.println(pedidos.getString(1)+" "+pedidos.getString(2));
+			}
 
-	  System.out.println("Seleccione el pedido que se ha recibido:");
-      String cpedido = input.nextLine();
-	  ResultSet comprobarpedido = statement.executeQuery("SELECT CPedido FROM Pedido_Envio WHERE CPedido="+cpedido );
+			System.out.println("Seleccione el pedido que se ha recibido:");
+			String cpedido = input.nextLine();
+			ResultSet comprobarpedido = statement.executeQuery("SELECT CPedido FROM Pedido_Envio WHERE CPedido="+cpedido );
 			while(!comprobarpedido.next()){
 				System.out.println("No existe ningún pedido pendiente con ese código. Por favor introduce un código de pedido existente:");
 				cpedido = input.nextLine();
 				comprobarpedido = statement.executeQuery("SELECT CPedido FROM Pedido_Envio WHERE CPedido="+cpedido);
 			}
 
-	  ResultSet producto= statement.executeQuery("SELECT * FROM Contiene WHERE CPedido=" + cpedido );
-	  ArrayList<String> cantidad_recibida = new ArrayList<String>();
-	  ArrayList<String> cproducto = new ArrayList<String>();
-		while(producto.next()){
+			ResultSet producto= statement.executeQuery("SELECT * FROM Contiene WHERE CPedido=" + cpedido );
+			ArrayList<String> cantidad_recibida = new ArrayList<String>();
+			ArrayList<String> cproducto = new ArrayList<String>();
+			while(producto.next()){
 
-			cantidad_recibida.add(producto.getString(3));
-			cproducto.add(producto.getString(1));
-		}
+				cantidad_recibida.add(producto.getString(3));
+				cproducto.add(producto.getString(1));
+			}
 
-		for(int i=0; i<cantidad_recibida.size(); i++){
-			statement.executeUpdate("UPDATE ProductoActivo SET Cantidad=Cantidad+" +cantidad_recibida.get(i) + " WHERE CProducto=" + cproducto.get(i) );
-		}
-	  	statement.executeUpdate("DELETE FROM Contiene WHERE CPedido=" + cpedido );
-      statement.executeUpdate("DELETE FROM Pedido_Envio WHERE CPedido=" + cpedido );
+			for(int i=0; i<cantidad_recibida.size(); i++){
+				statement.executeUpdate("UPDATE ProductoActivo SET Cantidad=Cantidad+" +cantidad_recibida.get(i) + " WHERE CProducto=" + cproducto.get(i) );
+			}
+			statement.executeUpdate("DELETE FROM Contiene WHERE CPedido=" + cpedido );
+			statement.executeUpdate("DELETE FROM Pedido_Envio WHERE CPedido=" + cpedido );
 
 			int opcion=0;
 			while(opcion!=1 && opcion!=2){
@@ -2260,56 +2210,56 @@ public void eliminarTablas() throws SQLException {
 			}
 
 
-				if(opcion==1){
-					connection.rollback(CheckPoint);
-				}
-				if(opcion==2){
-					connection.commit();
-				}
+			if(opcion==1){
+				connection.rollback(CheckPoint);
+			}
+			if(opcion==2){
+				connection.commit();
+			}
 
 		}catch(SQLException e){
 			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
 		}
-  };
+	};
 
 
-  public void menuTienda() throws SQLException{
-    try{
+	public void menuTienda() throws SQLException{
+		try{
 
-      Scanner input = new Scanner(System.in);
-      Statement statement = connection.createStatement();
-      int opcion;
+			Scanner input = new Scanner(System.in);
+			Statement statement = connection.createStatement();
+			int opcion;
 
-      boolean terminar = false;
+			boolean terminar = false;
 
-	  // SAVEPOINT
-      Savepoint CheckPoint = connection.setSavepoint("SinDetalles");
+			// SAVEPOINT
+			Savepoint CheckPoint = connection.setSavepoint("SinDetalles");
 
 
-      while (!terminar){
+			while (!terminar){
 				System.out.println("\nMENÚ TIENDA");
 				System.out.println("\nIntroduzca una opcion del 1 al 7:");
-	      System.out.println("\t1-Vender ítems.");
-	      System.out.println("\t2-Realizar pedido.");
-	      System.out.println("\t3-Dar de alta productos.");
-	      System.out.println("\t4-Dar de baja un producto.");
-	      System.out.println("\t5-Mostrar inventario.");
-	      System.out.println("\t6-Recibir pedido.");
-	      System.out.println("\t7-Volver al menú principal.");
+				System.out.println("\t1-Vender ítems.");
+				System.out.println("\t2-Realizar pedido.");
+				System.out.println("\t3-Dar de alta productos.");
+				System.out.println("\t4-Dar de baja un producto.");
+				System.out.println("\t5-Mostrar inventario.");
+				System.out.println("\t6-Recibir pedido.");
+				System.out.println("\t7-Volver al menú principal.");
 
-        opcion = input.nextInt();
+				opcion = input.nextInt();
 
-        switch(opcion){
-          case 1:
-              venderItems(statement);
-          break;
+				switch(opcion){
+					case 1:
+						venderItems(statement);
+						break;
 
-          case 2:
-              realizarPedido(statement);
-          break;
+					case 2:
+						realizarPedido(statement);
+						break;
 
-          case 3:
-		  		Savepoint CheckPoint1 = connection.setSavepoint("AltaProductos");
+					case 3:
+						Savepoint CheckPoint1 = connection.setSavepoint("AltaProductos");
 
 						boolean fin=false;
 						while(!fin){
@@ -2340,101 +2290,101 @@ public void eliminarTablas() throws SQLException {
 							}
 						}
 
-          break;
+						break;
 
-          case 4:
-              bajaProducto(statement);
-          break;
+					case 4:
+						bajaProducto(statement);
+						break;
 
-				  case 5:
-				  	  mostrarInventario(statement);
-				  break;
+					case 5:
+						mostrarInventario(statement);
+						break;
 
-				  case 6:
-				  	  recibirPedido(statement);
-				  break;
+					case 6:
+						recibirPedido(statement);
+						break;
 
-				  case 7:
-				      terminar=true;
-				  break;
+					case 7:
+						terminar=true;
+						break;
 
-				  default:
-				      System.out.println("Esta opción no es válida. Por favor, introduzca un número del 1 al 7");
-				  break;
+					default:
+						System.out.println("Esta opción no es válida. Por favor, introduzca un número del 1 al 7");
+						break;
 
-        }
-      }
-
-      connection.commit();
-    }catch(SQLException e){
-      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-    }
-  };
-
-
-
-
-
-	  ////////////////////////////////////////////////////////////////////////////////
-	  ////////////////////////////////////////////////////////////////////////////////
-	  //
-	  //              MANTENIMIENTO
-	  //
-	  ////////////////////////////////////////////////////////////////////////////////
-	  ////////////////////////////////////////////////////////////////////////////////
-			public void resetBBDD(Statement statement) throws SQLException{
-				eliminarTablas();
-				crearTablas();
-				inicializar();
-				System.out.println("Reseteo completado.");
-			};
-
-		  public void menuMantenimiento() throws SQLException{
-		    try{
-
-		      Scanner input = new Scanner(System.in);
-		      Statement statement = connection.createStatement();
-		      int opcion;
-
-		      boolean terminar = false;
-
-		      // SAVEPOINT
-      			Savepoint CheckPoint = connection.setSavepoint("SinDetalles");
-
-
-		      while (!terminar){
-						System.out.println("\nMENÚ MANTENIMIENTO");
-						System.out.println("\nIntroduzca una opcion:");
-						System.out.println("\t1-Resetear BBDD (Borrar tablas, crearlas e insertar tuplas iniciales).");
-						System.out.println("\t2-Limpiar componentes con contrato expirado.");
-			      System.out.println("\t3-Volver al menú principal.");
-
-		        opcion = input.nextInt();
-
-		        switch(opcion){
-		          case 1:
-		              resetBBDD(statement);
-		          break;
-
-		          case 2:
-									desactivarContratosExpirados(statement);
-						  break;
-
-							case 3:
-									terminar=true;
-							break;
-
-						  default:
-						      System.out.println("Esta opción no es válida. Por favor, introduzca un número válido");
-						  break;
-
-		        }
-		      }
-
-		      connection.commit();
-		    }catch(SQLException e){
-		      System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
-		    }
-		  };
-
+				}
 			}
+
+			connection.commit();
+		}catch(SQLException e){
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
+	};
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+//
+//              MANTENIMIENTO
+//
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+	public void resetBBDD(Statement statement) throws SQLException{
+		eliminarTablas();
+		crearTablas();
+		inicializar();
+		System.out.println("Reseteo completado.");
+	};
+
+	public void menuMantenimiento() throws SQLException{
+		try{
+
+			Scanner input = new Scanner(System.in);
+			Statement statement = connection.createStatement();
+			int opcion;
+
+			boolean terminar = false;
+
+			// SAVEPOINT
+			Savepoint CheckPoint = connection.setSavepoint("SinDetalles");
+
+
+			while (!terminar){
+				System.out.println("\nMENÚ MANTENIMIENTO");
+				System.out.println("\nIntroduzca una opcion:");
+				System.out.println("\t1-Resetear BBDD (Borrar tablas, crearlas e insertar tuplas iniciales).");
+				System.out.println("\t2-Limpiar componentes con contrato expirado.");
+				System.out.println("\t3-Volver al menú principal.");
+
+				opcion = input.nextInt();
+
+				switch(opcion){
+					case 1:
+						resetBBDD(statement);
+						break;
+
+					case 2:
+						desactivarContratosExpirados(statement);
+						break;
+
+					case 3:
+						terminar=true;
+						break;
+
+					default:
+						System.out.println("Esta opción no es válida. Por favor, introduzca un número válido");
+						break;
+
+				}
+			}
+
+			connection.commit();
+		}catch(SQLException e){
+			System.err.format("SQL State: %s\n%s\n", e.getSQLState(), e.getMessage());
+		}
+	};
+
+}
