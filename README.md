@@ -1,4 +1,4 @@
-# Los Serrano. Sistema de Informacion
+# Los Serrano. Information System
 Information System that provides the basic management of a soccer team.
 
 ### Requisitos
