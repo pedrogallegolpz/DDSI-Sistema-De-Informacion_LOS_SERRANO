@@ -1,75 +1,68 @@
 # Los Serrano. Sistema de Informacion
-Sistema de Información que proporciona la gestión básica de un equipo de fútbol. 
+Information System that provides the basic management of a soccer team.
 
 ### Requisitos
-Tener descargados los paquetes
-
+Have the below packages downloaded
 ​																 `javax.activation-1.2.0.jar`,  `javax.mail.jar` ,`ojdbc8.jar`
 
-Deben estar situados en el mismo directorio que  `ejecutable.sh` y ejecutarlo desde una terminal de Linux. Además deberemos de tener acceso a una base de datos SQL para que funcione. El propio código genera las tablas necesarias y las inicializa desde la opción **MANTENIMIENTO**.
+They should be located in the same directory as `executable.sh` and run from a Linux terminal. In addition, we must have access to an SQL database for it to work. The code itself generates the necessary tables and initializes them from the **MAINTENANCE** option.
 
 
 
 
 
-### Descripción resumida
+### Brief description
 
-El sistema consta de 4 subsistemas: *Equipo, Eventos, Abonados y Tienda* desde donde se gestiona todo lo correspondiente al club.
+The system consists of 4 subsystems: *Team, Events, Subscribers and Store* from where everything corresponding to the club is managed.
 
 
-
-##### Subsistema Equipo
-
-Nos proporciona las funcionalidades relativas a *dar de Alta/Baja a un componente, renovarle e incluso calcular el balance económico*, esto último teniendo en cuenta todos los movimientos de dinero que se producen en el sistema completo.
+##### Subsystem Team
+It provides us with the functionalities related to *Registering/Removing a component, renewing it and even calculating the economic balance*, the latter taking into account all the movements of money that occur in the complete system.
 
 
 
-##### Subsistema Eventos
+##### Events Subsystem
 
-Desde aquí se manejan las entradas tanto a los partidos en el estadio como a los conciertos o demás espectáculos. Podremos *consultar calendarios, vender entradas, reportar incidencias por evento...*
-
-
-
-##### Subsistema Abonados
-
-Nos permite gestionar a nuestros abonados. Desde *dar de Alta/Baja, enviar noticias* a nuestros abonados actuales y mucho más. 
-
-> Es notable decir que este código envía correos desde una cuenta GMAIL cuyo correo y contraseña se encuentran en el código. El correo no es personal y se hizo con la única finalidad de este proyecto. Por otra parte, cuidado con los correos que añadís en los Abonados porque se enviarán correos a todos ellos.
+Tickets for both matches in the stadium and concerts or other shows are handled from here. We will be able to *consult calendars, sell tickets, report incidents by event...*
 
 
 
-##### Subsistema Tienda
+##### Subsystem Subscribers
 
-Gestión de la tienda del club: *Inventario, venta de productos, gestión de pedidos...* Una de las armas más potentes de la economía de un club que  no podía faltar !!
+It allows us to manage our subscribers. From *registration/deregistration, sending news* to our current subscribers and much more.
 
-
-
-##### Más información
-
-Revisar el archivo `losserrano.pdf`. Se da información acerca del proceso de selección de requisitos funcionales y su definición, esquemas entidad relación, esquemas externos, diagramas de flujo de datos, paso a tablas y demás. Un largo proceso que desemboca en este increíble proyecto. 
+> It is remarkable to say that this code sends emails from a GMAIL account whose email and password are in the code. The email is not personal and was made for the sole purpose of this project. On the other hand, be careful with the emails that you add in the Subscribers because emails will be sent to all of them.
 
 
 
+##### Store Subsystem
+
+Club store management: *Inventory, product sales, order management...* One of the most powerful weapons in the economy of a club that could not be missing !!
 
 
-### Ejecución
 
-1. En primer lugar debemos ir al archivo `main.java` y escribir nuestra *`database_url`, `user`* y *`password`.*
+##### More information
 
-2. Ya solo tendremos que ejecutar
+Review the file `losserrano.pdf`. Information is given about the selection process of functional requirements and their definition, entity relationship schemas, external schemas, data flow diagrams, passage to tables and others. A long process that leads to this incredible project.
+
+### Execute
+
+1. Firstly, go to the file `main.java` and write the  *`database_url`, `user`* y *`password`.*
+
+2. Execute
 
    > ./ejecutable.sh
 
-3. Dentro de la interfaz podremos crear las tablas dirigiéndonos a la opción **6- MANTENIMIENTO**.
+3. Within the interface we can create the tables by going to the option **6- MANTENIMIENTO**.
 
-4. Pulsando en **1-Resetear BBDD (Borrar tablas, crearlas e insertar tuplas iniciales)** tendremos ya la BBDD lista para ser usada.
-
-
+4. Clicking on **1-Resetear BBDD (Borrar tablas, crearlas e insertar tuplas iniciales)** we'll have our database ready to be used.
 
 
 
-### Adicional
 
-En nuestro caso hicimos una interfaz de usuario la cual no vamos a compartir en este repositorio más que la imagen. Se desarrolló a través de JDeveloper Studio siguiendo su tutorial inicial, por lo que la dificultad de esta interfaz es mínima, así que os invito a hacer la misma!
+
+### Additional
+
+In our case we made a user interface which we are not going to share in this repository other than the image. It was developed through JDeveloper Studio following its initial tutorial, so the difficulty of this interface is minimal, so I invite you to do it yourself!
 
 ![Image text](https://github.com/pedrogallegolpz/DDSI-Sistema-De-Informacion_Los_Serrano/blob/master/interfaz.PNG)
